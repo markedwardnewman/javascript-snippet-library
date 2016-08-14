@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    My jQuery snippet library
+  </title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700%7CRoboto+Slab:700%7CSource+Code+Pro:500" type='text/css'>
+
+  <!-- jQuery UI css library -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      background: #eceff1;
+    }
+
+    a {color: #37474F;}
+
+    h1,h2,h3,h4 {
+      margin: 0;
+      font-family: 'Roboto Slab', sans-serif;
+      //font-weight: 700;
+    }
+
+    hr {margin: 0;}
+
+    input {background: #90a4ae;}
+
+    ul {margin: 16px 16px 16px 0;}
+    li { margin: 0 16px 8px 0;}
+    li:last-child {margin: 0 16px 0 0;}
+
+    fieldset {
+      display: inline-block;
+      border: thin solid grey;
+      border-radius: 4px;
+      background: #607d8b;
+    }
+    legend {
+      margin-bottom: -5px;
+      background: #607d8b;
+      color: white;
+    }
+    code {
+      display: inline-block;
+      padding: 0 16px 0 16px;
+      margin: 0 0 0 -58px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+    }
+    .code-html {margin: 0 0 0 -42px;}
+    .code-js {margin: 0 0 0 -32px;}
+    pre {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      background: #fafafa;
+
+    }
+
+    .bg-grey {background: #cfd8dc;}
+    .bg-darkgrey {background: #78909C;}
+    .bg-darkestgrey {background: #607d8b;}
+    .bg-white {background: #fafafa;}
+
+    .clearfix {overflow: auto;}
+
+    .div-parent {
+      width: 250px;
+      height: 250px;
+      border: 1px solid lightgrey;
+      box-shadow:2px 2px 3px -1px #37474F inset;
+    }
+
+    .div-child {
+      position: relative;
+      cursor: pointer;
+      width: 125px;
+      height: 125px;
+      background: #90a4ae;
+      border: 1px solid lightgrey;
+      z-index: 10;
+    }
+
+    .example_div {
+      display: inline-block;
+      padding: 8px;
+      border: solid thin black;
+      color: #fafafa;
+      background: #90a4ae;
+    }
+
+    .float-left {float: left;}
+    .float-right {float: right;}
+    .float-clear {overflow: auto;}
+
+    .js-content,
+    .js-results {padding: 16px 16px 0 16px;}
+    .js-entry {padding: 24px 32px 32px 32px;}
+    .js-entry:nth-of-type(even) { background: #cfd8dc;}
+    .js-menu {
+      padding: 16px;
+      color: #eceff1;
+      background: #607d8b;
+    }
+
+    .padding {padding: 16px;}
+
+    .pointer {cursor: pointer;}
+
+    .pre-wrap {white-space: pre-wrap;}
+
+    .switchclass_default {
+      padding: 24px 32px 32px 32px;
+      background: inherit;
+    }
+
+    .switchclass_swap {
+      padding: 24px 32px 32px 32px;
+      background-image: url("assets/images/bg-image-switchclass.jpg") !important;
+      background-size: cover !important;
+      color: #fafafa;
+    }
+
+    .text-center {text-align: center;}
+
+    .text-light {color: #eceff1;}
+
+    .timer {
+      vertical-align: text-top;
+      height: 250px;
+      font-size: 225px;
+      margin-left: 32px;
+      padding-bottom: 25px;
+    }
+
+    .ui-resizable-helper {
+      border: 1px dashed darkblue;
+      background-color: #FFF9E7;
+      opacity: .5;
+    }
+
+    .width-full {width: 100%;}
+
+    .width-half {width: 50%;}
+
+    #drag_drop_parent {border: 1px solid darkgrey;}
+
+    #progressbar-container .ui-widget-header {
+      background: #cfd8dc;
+      font-weight: bold;
+    }
+    #progressbar-container .ui-progressbar {
+      position: relative;
+      width: 50%;
+      border: 1px solid #607d8b;
+    }
+    #progressbar-container .progress-label {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      font-weight: bold;
+      color: #607d8b;
+    }
+
+    #resizable_div {
+      width: 600px;
+      height: 200px;
+      background: #90a4ae;
+      padding: 8px;
+    }
+
+    #selectable_content .ui-selecting {
+      cursor: pointer;
+      background: #90a4ae;
+    }
+
+    #selectable_content .ui-selected {
+      cursor: pointer;
+      color: #fafafa;
+      background: #90a4ae;
+    }
+
+    #slider_example_value {
+      width: 200px;
+      color: LimeGreen;
+      background-color: inherit;
+      font-size: 1.25em;
+      border: 0;
+      box-shadow: none;
+    }
+
+    #slider_example .ui-widget-header {
+      border: 0;
+      background: #90a4ae;
+    }
+
+    #slider_example .ui-state-default,
+    #slider_example.ui-widget-content .ui-state-default {background: #607d8b;}
+
+    #sortable_content li {cursor: pointer;}
+  </style>
+</head>
+
+<body>
+<!-- Because each entry has its own javacript code directly below the HTML that it works with, this jQuery CDN must remain above the rest of the code and should not be moved -->
+<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+  <div class="js-menu">
+    <h1>My <a href="javascript-snippets.html">vanilla javascript snippet library</a>&nbsp;&lt;|&gt;&nbsp;<a href="jquery-snippets.html">jQuery snippet library</a>&nbsp;&lt;|&gt;&nbsp;jQuery-ui snippet library</h1>
+  </div>
+  <div class="js-entry">
+    <h2>jQuery-ui Snippet Quick Reference:</h2>
+    <ul>
+      <li><a href="#animate_add_class_entry">ANIMATE, using added classes</a></li>
+      <li><a href="#animate_callback_entry">ANIMATE, with recursive callback</a></li>
+      <li><a href="#accordion_entry">ACCORDION</a>, with dynamic content height</li>
+      <li><a href="#autocomplete_entry">AUTOCOMPLETE</a>, referencing an external file</li>
+      <li><a href="#datepicker_entry">DATEPICKER</a>, with Saturday and Sunday disabled</li>
+      <li><a href="#dialog_entry">DIALOG</a>, with mandatory selection before close</li>
+      <li><a href="#draggable_timed_constraint_entry">DRAGGABLE, with parent and timed constraints</a></li>
+      <li><a href="#draggable_parent_constraint_entry">DRAGGABLE, with parent and x-axis constraints</a></li>
+      <li><a href="#drag_drop_entry">DRAG and DROP to specific elements</a></li>
+      <li><a href="#progressbar_entry">PROGRESS BAR</a></li>
+      <li><a href="#resizable_entry">RESIZABLE</a>, with ghost option enabled</li>
+      <li><a href="#selectable_entry">SELECTABLE</a>- Designates specified elements as selectable</li>
+      <li><a href="#slider_entry">SLIDER</a></li>
+      <li><a href="#sortable_entry">SORTABLE</a>, allows for manual rearrangement of specified elements</li>
+      <li><a href="#switchclass_entry">SWITCHCLASS, toggled</a></li>
+      <li><a href="#tooltips_entry">TOOLTIPS</a></li>
+      <li><a href="http://www.w3schools.com/jquery/jquery_ref_selectors.asp">Selector reference</a></li>
+      <li><a href="https://api.jqueryui.com/">jQuery-ui API Documentation</a></li>
+    </ul>
+    <h2>Notes:</h2>
+    <p>
+    The jquery-ui.min.js and jquery-ui.css files are required before any of the examples on this page can be used.
+    </p>
+    <p>
+    IDs, class, and variable names are intentionally descriptive and are quite long.  Shorter names may be more desirable for production code.
+    </p>
+    <p>
+    For ease of reference and to prevent redundancy, I kept all relevent code used on this page within the page itself (except for Google's "run-prettify", which I use for syntax highlighting). Most of the code you see displayed in the "HTML" and  "Javascript / jQuery" boxes below is the actual code used to render this page.  CSS tricks were used to get the spacing right and the source code legible.
+    </p>
+    <p>
+    jQuery-ui adds the "ui-draggable" and "ui-draggable-handle" classes automatically to the relevant element via javascript.  Even though it shows in the rendered HTML box, I did not put those classes there.
+    </p>
+  </div>
+  <hr>
+
+
+  <!-- ACCORDION, with dynamic content height -->
+  <div id="accordion_entry" class="js-entry">
+    <h2>ACCORDION, with dynamic content height</h2>
+    <div id="accordion_content" class="js-results">
+      <div id="accordion_example" class="width-half">
+        <h3>Content Panel Title #1</h3>
+        <div>
+          <p>
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          </p>
+          <p>
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          </p>
+          <p>
+            This example is using default CSS styling (except to keep the width at 50%).
+          </p>
+        </div>
+        <h3>Content Panel Title #2</h3>
+        <div>
+          <p>
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          </p>
+          <p>
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          </p>
+        </div>
+        <h3>Content Panel Title #3</h3>
+        <div>
+          <p>
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          </p>
+          <p>
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          </p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint pre-wrap"><code id="accordion_html" class="code-html">
+      &lt;div id="accordion_example" class="width-half"&gt;
+        &lt;h3&gt;Content Panel Title #1&lt;/h3&gt;
+        &lt;div&gt;
+          &lt;p&gt;
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          &lt;/p&gt;
+          &lt;p&gt;
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          &lt;/p&gt;
+          &lt;p&gt;
+            This example is using default CSS styling (except to keep the width at 50%).
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;h3&gt;Content Panel Title #2&lt;/h3&gt;
+        &lt;div&gt;
+          &lt;p&gt;
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          &lt;/p&gt;
+          &lt;p&gt;
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;h3&gt;Content Panel Title #3&lt;/h3&gt;
+        &lt;div&gt;
+          &lt;p&gt;
+            Content Panel Titles are declared with &lt;h3&gt; elements by default.
+          &lt;/p&gt;
+          &lt;p&gt;
+            The actual content is declared with a &lt;div&gt; as the immediate next sibling of the &lt;h3&gt; element.
+          &lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="accordion_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="accordion_script">
+    $("#accordion_example").accordion({
+        heightStyle: "content"
+    });
+  </script>
+
+
+  <!-- ANIMATE, using added classes -->
+  <div id="animate_add_class_entry" class="js-entry">
+    <h2>ANIMATE, using added classes</h2>
+    <div id="animate_add_class_content" class="js-results">
+      <button id="animate_add_class_btn">animate_add_class_btn</button>
+      <button id="animate_reset_class_btn">animate_reset_class_btn</button><br><br>
+      <div id="animate_add_class_div" class="example_div">
+        animate_add_class_div
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="animate_add_class_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="animate_add_class_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="animate_add_class_script">
+    $("#animate_add_class_btn").click(function() {
+        $("#animate_add_class_div").animate({
+            width: "+=446px",
+            backgroundColor: "#607d8b"
+        });
+    });
+
+    $("#animate_reset_class_btn").click(function() {
+        $("#animate_add_class_div").animate({
+            width: "-=446px",
+            backgroundColor: "#90a4ae"
+        });
+    });
+  </script>
+
+
+  <!-- ANIMATE, with recursive callback -->
+  <div id="animate_callback_entry" class="js-entry">
+    <h2>ANIMATE, with recursive callback</h2>
+    <div id="animate_callback_content" class="js-results">
+      <div id="animate_callback_div" class="example_div width-half text-center">
+        <span>Click this div!</span>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="animate_callback_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="animate_callback_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="animate_callback_script">
+    $("#animate_callback_div").click(function() {
+        $("#animate_callback_div").animate({
+            backgroundColor: "#607d8b",
+            color: "#607d8b"
+        }, function() {
+            $("#animate_callback_div").animate({
+                color: "#fafafa"
+            });
+            $("#animate_callback_div").text("This message appears after the animation");
+        });
+    });
+  </script>
+
+
+  <!-- AUTOCOMPLETE, referencing an external file -->
+  <div id="autocomplete_entry" class="js-entry">
+    <h2>AUTOCOMPLETE, referencing an external file</h2>
+    <div id="autocomplete_content" class="js-results">
+      Type any day of the week: <input id="autocomplete_input">
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="autocomplete_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="autocomplete_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="autocomplete_script">
+    populateAutoComplete("list-days-of-week.txt");
+
+    function populateAutoComplete(source_file) {
+        var tags = [];
+
+        $.get("assets/content/" + source_file, function(data) {
+            tags = data.split(",");
+
+            $("#autocomplete_input").autocomplete({
+                source: tags
+            });
+        });
+    }
+  </script>
+
+
+  <!-- DATEPICKER, with Saturday and Sunday disabled -->
+  <div id="datepicker_entry" class="js-entry">
+    <h2>DATEPICKER, with Saturday and Sunday disabled</h2>
+    <div id="datepicker_content" class="js-results">
+      Enter a date:<br>
+      <div id="datepicker_example"></div><br>
+        Selected date: <input id="datepicker_selected">
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="datepicker_html" class="code-html">
+      &lt;div id="datepicker_content" class="js-results"&gt;
+        Enter a date:
+        &lt;div type="text" id="datepicker_example"&gt;&lt;/div&gt;
+          Selected date: &lt;input id="datepicker_selected"&gt;&lt;/input&gt;
+      &lt;/div&gt;
+    </code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="datepicker_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="datepicker_script">
+    $("#datepicker_example").datepicker({
+        beforeShowDay: $.datepicker.noWeekends,
+        altField: "#datepicker_selected"
+    });
+  </script>
+
+
+  <!-- DIALOG, with mandatory selection before close -->
+  <div id="dialog_entry" class="js-entry bg-grey">
+    <h2>DIALOG, with mandatory selection before close</h2>
+    <div id="dialog_content" class="js-results">
+      <button id="dialog_btn">dialog_btn</button>
+      <div id="dialog_example" title="An excellent dialog!">
+        <div>
+          <label for="dialog_terms">I've got your tail! Check the select box if you want me to let go...</label>
+          <br>
+          <br>
+          <input id="dialog_terms" type="checkbox">
+        </div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="dialog_html" class="code-html">
+      &lt;div id="dialog_content" class="js-results"&gt;
+        &lt;button id="dialog_btn"&gt;dialog_btn&lt;/button&gt;
+        &lt;div id="dialog_example" title="An excellent dialog!"&gt;
+          &lt;div&gt;
+            &lt;label for="dialog_terms"&gt;Able to close only after a selection is made&lt;/label&gt;
+            &lt;br&gt;
+            &lt;br&gt;
+            &lt;input id="dialog_terms" type="checkbox"&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="dialog_js" class="code-js"></code></pre></fieldset>
+  </div>
+
+  <script id="dialog_script">
+    $("#dialog_example").dialog({
+        autoOpen: false,
+        //modal: true,
+        buttons: {
+            OK: function() {
+                $(this).dialog("close");
+            }
+        },
+        beforeClose: function(event, ui) {
+            if (!$("#dialog_terms").prop("checked")) {
+                event.preventDefault();
+                $("[for=dialog_terms]").addClass("text-warning");
+            }
+        }
+    });
+
+    $("#dialog_btn").click(function() {
+        $("#dialog_example").dialog("open");
+    });
+  </script>
+
+
+  <!-- DRAG and DROP to specific elements -->
+  <div id="drag_drop_entry" class="js-entry">
+    <h2>DRAG and DROP to specific elements</h2>
+    <ul>
+      <li>L1 should be considered dropped when it touches R1 and L2 must be contained within R2 before it is considered dropped.</li>
+      <li>R1 and R2 should change colors when L1 and L2 hover over their correct targets. -> After using an updated version of jQuery-ui, the color change isn't working.  Needs a look.</li>
+    </ul>
+    <div id="drag_drop_content" class="js-results">
+      <div id="drag_drop_parent" class="float-clear width-half">
+        <div class="width-half float-left">
+          <div id ="drag_drop_l1" class="div-child">
+            L1
+          </div>
+          <div id ="drag_drop_l2" class="div-child">
+            L2
+          </div>
+        </div>
+        <div class="width-half float-right">
+          <div id ="drag_drop_r1" class="div-parent bg-white">
+            R1
+          </div>
+          <br>
+          <div id ="drag_drop_r2" class="div-parent bg-white">
+            R2
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="drag_drop_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="drag_drop_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="drag_drop_script">
+    $("#drag_drop_l1").draggable({
+        containment: "#drag_drop_parent",
+    });
+
+    $("#drag_drop_l2").draggable({
+        containment: "#drag_drop_parent"
+    });
+
+    $("#drag_drop_r1").droppable({
+        accept: "#drag_drop_l1",
+        hoverClass: "bg-darkgrey",
+        tolerance: "touch",
+        drop: function(event, ui) {
+            if (ui.draggable.is("#drag_drop_l1")) {
+                $("#drag_drop_r1").addClass("bg-darkestgrey");
+                ui.draggable.draggable('option', 'disabled', true);
+            }
+            if (ui.draggable.is("#drag_drop_l2")) {
+                $("#drag_drop_r1").addClass("bg-darkestgrey");
+                ui.draggable.draggable('option', 'revert', true);
+            }
+        }
+    });
+
+    $("#drag_drop_r2").droppable({
+        accept: "#drag_drop_l2",
+        hoverClass: "bg-darkgrey",
+        tolerance: "fit",
+        drop: function(event, ui) {
+            if (ui.draggable.is("#drag_drop_l2")) {
+                $("#drag_drop_r2").addClass("bg-darkestgrey");
+                ui.draggable.draggable('option', 'disabled', true);
+            }
+        }
+    });
+  </script>
+
+
+  <!-- DRAGGABLE, with parent and timed constraints -->
+  <div id="draggable_timed_constraint_entry" class="js-entry">
+    <h2>DRAGGABLE, with parent and timed constraints</h2>
+    <div id="draggable_timed_constraint_content" class="js-results">
+      <div class="example float-clear">
+        <div class="div-parent bg-white float-left">
+          <div id="draggable_timed_constraint_div" class="div-child"></div>
+        </div>
+        <span class="timer float-left"></span>
+      </div>
+      <br>
+      <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="draggable_timed_constraint_html" class="code-html"></code></pre></fieldset>
+      <br><br>
+      <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="draggable_timed_constraint_js" class="code-js"></code></pre></fieldset>
+    </div>
+  </div>
+  <script id="draggable_timed_constraint_script">
+    var countdown_value = 10;
+
+    startDraggable("#draggable_timed_constraint_div");
+
+    setTimeout(function() {
+        stopDraggable()
+    }, countdown_value * 1000);
+
+    startCountdown(".timer", countdown_value);
+
+    function startDraggable(element_id) {
+        $(element_id).draggable({
+            containment: "parent"
+        });
+    };
+
+    function stopDraggable() {
+        $("#draggable_timed_constraint_div").draggable({
+            disabled: true
+        });
+    };
+
+    function startCountdown(element_id, count_value) {
+        var show_count = $(element_id);
+        var intervalID = setInterval(function() {
+            show_count.html(count_value);
+            if (--count_value === 0) {
+                window.clearInterval(intervalID);
+            }
+        }, 1000)
+    };
+  </script>
+
+
+  <!-- DRAGGABLE, with parent and x-axis constraints -->
+  <div id="draggable_parent_constraint_entry" class="js-entry">
+    <h2>DRAGGABLE, with parent and x-axis constraints</h2>
+    <div id="draggable_parent_constraint_content" class="js-results">
+      <div class="div-parent bg-white">
+        <div id="draggable_parent_constraint_child" class="div-child"></div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="draggable_parent_constraint_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="draggable_parent_constraint_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="draggable_parent_constraint_script">
+    $("#draggable_parent_constraint_child").draggable({
+        containment: "parent",
+        axis: "x"
+    });
+  </script>
+
+
+  <!-- PROGRESS BAR -->
+  <div id="progressbar_entry" class="js-entry">
+    <h2>PROGRESS BAR</h2>
+    <ul>
+      <li>value: 10</li>
+      <li>max: 100</li>
+      <li>setTimeout ( progress, 100 ) ; within the progress() function</li>
+      <li>setTimeout ( progress, 1000 ); for initial invocation of progress()</li>
+    </ul>
+    <div id="progressbar_content" class="js-results">
+      <div id="progressbar-container" class="padding">
+        <button onClick="showProgress()">Simulate Progress!</button>
+        <br><br>
+        <div id="progressbar_example">
+          <div class="progress-label"></div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="progressbar_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="progressbar_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="progressbar_script">
+    $("#progressbar_example").progressbar({
+        //used just to create a placeholder progress bar
+    });
+
+    function showProgress() {
+        var progressbar = $("#progressbar_example");
+        progressLabel = $(".progress-label");
+
+        $("#progressbar_example").progressbar({
+            value: 10,
+            max: 100,
+            change: function() {
+                progressLabel.text(progressbar.progressbar("value") + "%");
+            },
+            complete: function() {
+                progressLabel.text("Progress Complete!");
+            }
+        });
+
+        function progress() {
+            var val = progressbar.progressbar("value") || 0;
+            progressbar.progressbar("value", val + 1);
+            if (val < 99) {
+                setTimeout(progress, 100);
+            }
+        }
+        setTimeout(progress, 1000);
+    };
+  </script>
+
+
+  <!-- RESIZABLE with ghost option enabled -->
+  <div id="resizable_entry" class="js-entry">
+    <h2>RESIZABLE with ghost option enabled</h2>
+    <ul>
+      <li>This function relies on the jquery-ui.css filed in order to work correctly</li>
+    </ul>
+    <div id="resizable_content" class="js-results">
+      <div id="resizable_div" class="example">
+        Use the arrow key in the bottom right of this panel to resize it!
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="resizable_html" class="code-html">
+      &lt;div id="resizable_content" class="js-results"&gt;
+        &lt;div id="resizable_div" class="example"&gt;
+          Use the arrow key in the bottom right of this panel to resize it!
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="resizable_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="resizable_script">
+    $("#resizable_div").resizable({ ghost: true });
+  </script>
+
+
+  <!-- SELECTABLE- Designates specified elements as selectable -->
+  <div id="selectable_entry" class="js-entry">
+    <h2>SELECTABLE- Designates specified elements as selectable</h2>
+    <div id="selectable_content" class="js-results">
+      <ol id="selectable_ol">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+        <li>Item 5</li>
+      </ol>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="selectable_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="selectable_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="selectable_script">
+    $("#selectable_ol").selectable ({
+        filter: "li:first-child, li:last-child"
+    });
+  </script>
+
+
+  <!-- SLIDER -->
+  <div id="slider_entry" class="js-entry">
+    <h2>SLIDER</h2>
+    <ul>
+      <li>min: 0</li>
+      <li>max: 1000</li>
+      <li>Initial values of 275 and 750</li>
+    </ul>
+    <div id="slider_content" class="js-results">
+      <div class="width-half text-center">
+        <div id="slider_example"></div>
+        <br>
+          <label for="slider_example_value">Price range: </label>
+          <input id="slider_example_value" type="text">
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="slider_html" class="code-html">
+      &lt;div id="slider_content" class="js-results"&gt;
+        &lt;div class="width-half text-center"&gt;
+          &lt;div id="slider_example"&gt;&lt;/div&gt;
+          &lt;br&gt;
+            &lt;label for="slider_example_value"&gt;Price range: &lt;/label&gt;
+            &lt;input id="slider_example_value" type="text"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    </code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="slider_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="slider_script">
+    $("#slider_example").slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [275, 750],
+        slide: function(event, ui) {
+            $("#slider_example_value").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
+    });
+
+    $("#slider_example_value").val("$" + $("#slider_example").slider("values", 0) +
+        " - $" + $("#slider_example").slider("values", 1));
+  </script>
+
+
+  <!-- SORTABLE, allows for manual rearrangement of specified elements -->
+  <div id="sortable_entry" class="js-entry">
+    <h2>SORTABLE, allows for manual rearrangement of specified elements</h2>
+    <div id="sortable_content" class="js-results">
+      <ol id="sortable_ol">
+        <li class="bbb">Item 1</li>
+        <li class="bbb">Item 2</li>
+        <li class="bbb">Item 3</li>
+        <li class="bbb">Item 4</li>
+        <li class="bbb">Item 5</li>
+      </ol>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="sortable_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="sortable_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="sortable_script">
+    $("#sortable_ol").sortable({
+        placeholder: "bg-darkgrey"
+    });
+  </script>
+
+
+  <!-- SWITCHCLASS, toggled -->
+  <div id="switchclass_entry" class="switchclass_default">
+    <h2>SWITCHCLASS, toggled</h2>
+    <ul>
+      <li>Best used if the referenced element has only one class value</li>
+      <li>All class values will be replaced, so keep the desired values in the swapped class</li>
+    </ul>
+    <div id="switchclass_content" class="js-results">
+      <button id="switchclass_btn">switchclass_btn</button><br><br>
+    </div>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="switchclass_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="switchclass_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="switchclass_script">
+    $("#switchclass_btn").click(function() {
+        var current_class = $("#switchclass_entry").attr("class");
+
+        if (current_class == "switchclass_default") {
+            $("#switchclass_entry").switchClass("switchclass_default", "switchclass_swap", "easeOutQuad");
+        } else {
+            $("#switchclass_entry").switchClass("switchclass_swap", "switchclass_default", "easeInQuad");
+        }
+    });
+  </script>
+
+
+  <!-- TOOLTIPS -->
+  <div id="tooltips_entry" class="js-entry">
+    <h2>TOOLTIPS</h2>
+    <div id="tooltips_content" class="js-results">
+      <label for="tooltips_name">First name:</label>
+      <input id="tooltips_name" title="Enter your name:">
+      <label for="tooltips_city">Home city:</label>
+      <input id="tooltips_city" title="Enter a city">
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="tooltips_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="tooltips_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="tooltips_script">
+    $("#tooltips_name, #tooltips_city").tooltip();
+  </script>
+
+<script>
+//These are used to display the HTML and JS that are specific to each entry
+//For reference purposes they can be safely ignored
+    $("#accordion_js").text($("#accordion_script").html());
+    $("#animate_add_class_html").text($("#animate_add_class_content").html());
+    $("#animate_add_class_js").text($("#animate_add_class_script").html());
+    $("#animate_callback_html").text($("#animate_callback_content").html());
+    $("#animate_callback_js").text($("#animate_callback_script").html());
+    $("#autocomplete_html").text($("#autocomplete_content").html());
+    $("#autocomplete_js").text($("#autocomplete_script").html());
+    $("#datepicker_js").text($("#datepicker_script").html());
+    $("#dialog_js").text($("#dialog_script").html());
+    $("#drag_drop_html").text($("#drag_drop_content").html());
+    $("#drag_drop_js").text($("#drag_drop_script").html());
+    $("#draggable_timed_constraint_html").text($("#draggable_timed_constraint_content").html());
+    $("#draggable_timed_constraint_js").text($("#draggable_timed_constraint_script").html());
+    $("#draggable_parent_constraint_html").text($("#draggable_parent_constraint_content").html());
+    $("#draggable_parent_constraint_js").text($("#draggable_parent_constraint_script").html());
+    $("#progressbar_html").text($("#progressbar_content").html());
+    $("#progressbar_js").text($("#progressbar_script").html());
+    $("#resizable_js").text($("#resizable_script").html());
+    $("#selectable_html").text($("#selectable_content").html());
+    $("#selectable_js").text($("#selectable_script").html());
+    $("#slider_js").text($("#slider_script").html());
+    $("#sortable_html").text($("#sortable_content").html());
+    $("#sortable_js").text($("#sortable_script").html());
+    $("#switchclass_html").text($("#switchclass_content").html());
+    $("#switchclass_js").text($("#switchclass_script").html());
+    $("#tooltips_html").text($("#tooltips_content").html());
+    $("#tooltips_js").text($("#tooltips_script").html());
+</script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+</body>
+</html>

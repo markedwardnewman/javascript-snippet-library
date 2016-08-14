@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    My jQuery snippet library
+  </title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700%7CRoboto+Slab:700%7CSource+Code+Pro:500" type='text/css'>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      background: #eceff1;
+    }
+    
+    a,
+    a:visited {color: #37474F;}
+
+    h1,h2,h3,h4 {
+      margin: 0;
+      font-family: 'Roboto Slab', sans-serif;
+      //font-weight: 700;
+    }
+
+    hr {margin: 0;}
+    
+    button {margin: 0 16px 16px 0;}
+
+    input {background: #90a4ae;}
+
+    ul {margin: 16px 16px 16px 0;}
+    li { margin: 0 16px 8px 0;}
+    li:last-child {margin: 0 16px 0 0;}
+    
+    table {border: 1px double #607d8b;}
+    
+    fieldset {
+      display: inline-block;
+      border: thin solid grey;
+      border-radius: 4px;
+      background: #607d8b;
+    }
+    legend {
+      margin-bottom: -5px;
+      background: #607d8b;
+      color: white;
+    }
+    code {
+      display: inline-block;
+      padding: 0 16px 0 16px;
+      margin: 0 0 0 -58px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 14px;
+    }
+    .code-html {margin: 0 0 0 -42px;}
+    .code-js {margin: 0 0 0 -32px;}
+    pre {
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      background: #fafafa;
+    }
+    
+    .bg-darkgrey {background: #607d8b;}
+
+    .clearfix {overflow: auto;}
+
+    .div-parent {
+      width: 250px;
+      height: 250px;
+      background-color: #eceff1;
+      border: 1px solid lightgrey;
+      box-shadow:2px 2px 3px -1px darkblue inset;
+    }
+
+    .div-child {
+      cursor: pointer;
+      color: lavender;
+      width: 125px;
+      height: 125px;
+      background-color: #90a4ae;
+      border: 1px solid lightgrey;
+    }
+
+    .example_div {
+      display: inline-block;
+      padding: 8px;
+      border: solid thin black;
+      color: #fafafa;
+      background: #90a4ae;
+    }
+
+    .example_div2 {
+      position:relative;
+      width: 200px;
+      padding: 8px;
+      margin: 0 auto;
+      text-align: center;
+      color: #fafafa;
+      background: #90a4ae;
+    }
+
+    .example_div3 {
+      display: inline-block;
+      padding: 8px;
+      border: solid thin black;
+      color: #fafafa;
+      background: #90a4ae;
+      width: 150px;
+      height: 92px;
+    }
+    
+    .float-left {float: left;}
+
+    .js-content,
+    .js-results {padding: 16px 16px 0 16px;}    
+    .js-entry {padding: 24px 32px 32px 32px;}
+    .js-entry:nth-of-type(even) { background: #cfd8dc;}
+    .js-menu {
+      padding: 16px;
+      color: #eceff1;
+      background: #607d8b;      
+    }
+    
+    .margin {margin: 16px;}
+
+    .padding {padding: 16px;}
+
+    .pointer {cursor: pointer;}
+
+    .text-center {text-align: center;}
+    
+    .text-light {color: #eceff1;}
+
+    .width-full { width: 100%;}
+
+    .width-half { width: 50%;}
+    
+    #toggle_without_toggleclass_btn {
+      width: 54px;
+      height: 54px;
+      background-image: url(assets/images/home.png);
+      background-repeat: no-repeat;
+    }
+
+    #modify_opacity_div {
+      display: inline-block;
+      border: solid thin black;
+      color: black;
+      background: black;
+      width: 300px;
+      height: 82px;
+      margin-bottom: -56px;
+    }
+    
+    #modify_opacity_div2 {
+      display: inline-block;
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+<!-- Because each entry has its own javacript code directly below the HTML that it works with, this jQuery CDN must remain above the rest of the code and should not be moved -->
+<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <div class="js-menu">
+    <h1>My <a href="javascript-snippets.html">vanilla javascript snippet library</a>&nbsp;&lt;|&gt;&nbsp;jQuery snippet library&nbsp;&lt;|&gt;&nbsp;<a href="jquery-ui-snippets.html">jQuery-ui snippet library</a></h1>
+  </div>
+  <div class="js-entry">
+    <h2>jQuery Snippet Quick Reference:</h2>
+    <ul>
+      <li><a href="#ajax_load_specific_entry">AJAX</a>- Load only specific elements from an external file, uses callback for status notification</li>
+      <li><a href="#ajax_post_entry">AJAX with PHP using POST</a>- Sends name and country data to a server then displays the processed results.</li>
+      <li><a href="#animate_simple_entry">ANIMATE, simple</a>- slide right</li>
+      <li><a href="#animate_multiple_entry">ANIMATE, multiple effects</a></li>
+      <li><a href="#append_entry">APPEND</a>- Appends content of an input field as a list item of an unordered list</li>
+      <li><a href="#append_prepend_entry">APPEND / PREPEND</a>- One button inserts an image before a default image and another button inserts an image after the default image</li>
+      <li><a href="#chaining_entry">CHAINING</a></li>
+      <li><a href="#css_add_attributes_entry">CSS, ADD ATTRIBUTES</a>- add multiple attributes using a single function</li>
+      <li><a href="#callback_entry">CALLBACK</a>- Hide /show a div, with slight delay</li>
+      <li><a href="#get_html_text_entry">GET HTML and / or TEXT</a></li>
+      <li><a href="#get_value_style_entry">GET VALUE / CSS STYLE</a>- Displays the value and style attribute of an &lt;input&gt; element</li>
+      <li><a href="#selector_first_child_entry">JQUERY SELECTOR</a>, first child within a specified element</li>
+      <li><a href="#hide_multiple_entry">HIDE</a>- query multiple elements using a single function</li>
+      <li><a href="#input_focus_entry">INPUT with FOCUS</a>- Applies a color to an input field, returns it back to previous color on blur</li>
+      <li><a href="#modify_opacity_entry">MODIFY OPACITY</a>- fade a &lt;div&gt; from black to 20% of black to reveal a secret message.</li>
+      <li><a href="#usage_inside_vanilla_entry">JQUERY USAGE</a>- using jQuery within a vanilla javacript function</li>
+      <li><a href="#mouse_hover_entry">MOUSE EVENT, HOVER</a>- Increase &lt;nav&gt; size using .hover(), then use a callback to return it to its default size</li>
+      <li><a href="#remove_element_entry">REMOVE ELEMENT</a></li>
+      <li><a href="#set_value_style_entry">SET VALUE / CSS STYLE</a>- Set the value and style attribute of an &lt;input&gt; text box element</li>
+      <li><a href="#toggle_without_toggleclass_entry">TOGGLE</a>- toggle a button image (without using jQuery's built-in toggleClass()</li>
+      <li><a href="#toggle_with_callback_entry">TOGGLE with CALLBACK</a>- Uses a toggle button to hide / show a div, chained to a slight delay</li>
+      <li><a href="#viewport_dimensions_entry">VIEWPORT DIMENSIONS</a></li>
+      <li><a href="http://www.w3schools.com/jquery/jquery_ref_selectors.asp">Selector reference</a></li>
+      <li><a href="https://api.jquery.com/">jQuery API Documentation</a></li>
+    </ul>
+    <h2>Notes:</h2>
+    <p>
+    IDs, class, and variable names are intentionally descriptive and are quite long.  Shorter names may be more desirable for production code.
+    </p>
+    <p>
+      For ease of reference and to prevent redundancy, I kept all relevent code used on this page within the page itself (except for Google's "run-prettify", which I use for syntax highlighting). All code you see displayed in the "HTML" and  "Javascript / jQuery" boxes below is the actual code used to render this page.  CSS tricks were used to get the spacing right and the source code legible.
+    </p>
+  </div>
+  <hr>
+
+  <!-- AJAX- Load only specific elements from an external file, uses callback for status notification -->
+  <div id="ajax_load_specific_entry" class="js-entry">
+    <h2>AJAX- Load only specific elements from an external file, uses callback for status notification</h2>
+    <div class="js-results">
+      <p>
+        <button id="ajax_load_specific_btn">ajax_load_specific_btn</button><br>
+        Content of external file:
+      </p>
+      <div class="example_div">
+        &lt;div&gt;
+          <br>&nbsp;&nbsp;
+          &lt;p id="p1">This is p1&lt;/p&gt;
+          <br>&nbsp;&nbsp;
+          &lt;p id="p2">This is p2&lt;/p&gt;
+          <br>
+        &lt;/div&gt;
+      </div>
+      <p>
+        Loaded code...
+      </p>
+      <div id="ajax_load_specific_content">
+        <div id="ajax_load_specific_results" class="example_div"></div>
+        <p>
+          Status... <span id="ajax_load_specific_handling"></span>
+        </p>
+      </div>
+    </div>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="ajax_load_specific_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="ajax_load_specific_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="ajax_load_specific_script">
+    $("#ajax_load_specific_btn").click(function() {
+        $("#ajax_load_specific_results").load("assets/content/ajax-load-specific-content.txt #p2", function(responseTxt, statusTxt, xhr) {
+            if (statusTxt == "success") {
+                $("#ajax_load_specific_handling").html("External content loaded successfully!");
+            }
+
+            else {
+                $("#ajax_load_specific_handling").html("Error: " + xhr.status + "- " + xhr.statusText);
+            }
+        });
+    });
+  </script>
+
+
+  <!-- AJAX with PHP using POST- Sends name and country data to a server then displays the processed results. -->
+  <div id="ajax_post_entry" class="js-entry">
+    <h2>AJAX with PHP using POST- Sends name and country data to a server then displays the processed results.</h2>
+    <div class="js-results">
+      <p>
+      Enter a name:<br>
+      <input id="ajax_post_input_name">
+      </p>
+      <p>
+      Enter a country:<br>
+      <input id="ajax_post_input_country">
+      </p>
+      <button id="ajax_post_btn">ajax_post_btn</button>
+      <p>
+        Content of external .php file:
+      </p>
+      <div class="example_div margin">
+        &lt;?php
+        <br>&nbsp;&nbsp;
+        $name = $_POST["name"];
+        <br>&nbsp;&nbsp;
+        $country = $_POST["country"];
+        <br>&nbsp;&nbsp;
+        echo "Hello " . $name . ". ";
+        <br>&nbsp;&nbsp;
+        echo "You were born in " . $country . ".";
+        <br>
+        ?&gt;
+        <br>
+      </div>
+    </div>
+    <div id="ajax_post_content" class="padding">
+      <p>
+        Processed .php code:
+      </p>
+      <div id="ajax_post_results" class="example_div margin"></div>
+    </div>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="ajax_post_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="ajax_post_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="ajax_post_script">
+    $("#ajax_post_btn").click(function() {
+        $.post("assets/content/ajax-post-content.php", {
+                name: $("#ajax_post_input_name").val(),
+                country: $("#ajax_post_input_country").val()
+            },
+            function(data, status) {
+                $("#ajax_post_results").html("Data:<br>&nbsp;&nbsp;" + data + "<br><br>Status:<br>&nbsp;&nbsp;" + status);
+            });
+    });
+  </script>
+
+
+  <!-- ANIMATE, simple- slide right -->
+  <div id="animate_simple_entry" class="js-entry">
+    <h2>ANIMATE, simple- slide right</h2>
+    <ul>
+      <li><em>Design Note:</em> Not sure why, but left makes the div go right and vice versa</li>
+    </ul>
+    <div id="animate_simple_content" class="js-content">
+      <button id="animate_simple_btn">animate_simple_btn</button><br><br>
+      <div class="width-half bg-darkgrey">
+        <div id="animate_simple_div" class="example_div2">animate_simple_div</div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="animate_simple_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="animate_simple_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="animate_simple_script">
+    $("#animate_simple_btn").click(function() {
+        $("#animate_simple_div").animate({
+            right: '100px'
+        });
+    });
+  </script>
+
+
+  <!-- ANIMATE, multiple effects -->
+  <div id="animate_multiple_entry" class="js-entry">
+    <h2>ANIMATE, multiple effects</h2>
+    <div id="animate_multiple_content" class="js-results">
+      <button id="animate_multiple_btn">animate_multiple_btn</button><br><br>
+      <div id="animate_multiple_div" class="example_div">
+        div1
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="animate_multiple_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="animate_multiple_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="animate_multiple_script">
+    $("#animate_multiple_btn").click(function() {
+        $("#animate_multiple_div").animate({
+            width: '100px',
+            height: '100px'
+        }, function() {
+            $("#animate_multiple_div").hide(1000);
+        }).toggle(700);
+    });
+  </script>
+
+
+  <!-- APPEND- Appends content of an input field as a list item of an unordered list -->
+  <div id="append_entry" class="js-entry">
+    <h2>APPEND- Appends content of an input field as a list item of an unordered list</h2>
+    <ul>
+      <li>Uses Enter to initiate the event</li>
+    </ul>
+    <div id="append_content" class="js-results">
+      <input id="append_input"><br><br>
+      List items:
+      <ul></ul>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="append_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="append_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="append_script">
+    $("#append_input").keydown(function(event) {
+        if (event.keyCode == 13) { // keyCode 13 is used for ENTER
+            var user_input = $("#append_input").val();
+            var new_li = $("<li></li>").text(user_input);
+
+            $("#append_content ul").append(new_li);
+            $("#append_input").val("");
+        }
+    });
+  </script>
+
+
+  <!-- APPEND / PREPEND- One button inserts an image before a default image and another button inserts an image after the default image -->
+  <div id="append_prepend_entry" class="js-entry">
+    <h2>APPEND / PREPEND- One button inserts an image before a default image and another button inserts an image after the default image</h2>
+    <div id="append_prepend_content" class="js-results">
+      <button id="append_prepend_app_btn">Append image</button>
+      <button id="append_prepend_pre_btn">Prepend image</button><br><br>
+      <div id="images_container" class="clearfix">
+        <div id="default_image" class="float-left">
+          <img src="assets/images/smiley.png" alt="append demo image">
+        </div>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="append_prepend_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="append_prepend_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="append_prepend_script">
+    $("#append_prepend_pre_btn").click(function(){
+        $("#images_container").prepend("<div id='prepended_images' class='float-left'>");
+        $("#prepended_images").prepend("<img src='assets/images/my_avatar_right.jpg'>");
+        $("#images_container").prepend("</div>");
+    });
+
+    $("#append_prepend_app_btn").click(function(){
+        $("#images_container").append("<div id='appended_images' class='float-left'>");
+        $("#appended_images").append("<img src='assets/images/my_avatar_left.jpg'>");
+        $("#images_container").append("</div>");
+    });
+  </script>
+
+
+  <!-- CALLBACK with CHAINING: Hide / show a div, with slight delay -->
+  <div id="callback_entry" class="js-entry">
+    <h2>CALLBACK: Hide / show a div, with slight delay</h2>
+    <ul>
+      <li>A callback function is executed after the current effect is 100% finished.</li>
+      <li><em>Typical syntax:</em> $(selector).hide(speed,callback);</li>
+    </ul>
+    <div id="callback_content" class="js-results">
+      <button id="callback_hide_btn">callback_hide_btn</button>
+      <button id="callback_show_btn">callback_show_btn</button><br><br>
+      <div id="callback_div" class="example_div">
+        div1
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="callback_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="callback_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="callback_script">
+    $("#callback_hide_btn").click(function() {
+        $("#callback_div").hide(2000);
+    });
+
+    $("#callback_show_btn").click(function() {
+        $("#callback_div").show(2000);
+    });
+  </script>
+
+
+  <!-- CHAINING -->
+  <div id="chaining_entry" class="js-entry">
+    <h2>CHAINING </h2>
+    <ul>
+      <li>Chaining is a technique used to run multiple jQuery commands, one after the other, on the same element(s).</li>
+      <li>To chain an action, you simply append the action to the previous action.</li>
+    </ul>
+    <div id="chaining_content" class="js-results">
+      <button id="chaining_btn">chaining_btn</button><br><br>
+      <div id="chaining_div" class="example_div">
+        example div
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="chaining_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="chaining_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="chaining_script">
+    $("#chaining_btn").click(function() {
+        //below is an example of chaining
+        $("#chaining_div").css("color", "black").slideUp().slideDown();
+    });
+  </script>
+
+  <!-- CSS, ADD ATTRIBUTES- add multiple attributes using a single function -->
+  <div id="css_add_attributes_entry" class="js-entry">
+    <h2>CSS, ADD ATTRIBUTES- add multiple attributes using a single function</h2>
+    <div id="css_add_attributes_content" class="js-results">
+      <button id="css_add_attributes_btn">css_add_attributes_btn</button><br><br>
+      <table id="css_add_attributes_table">
+        <tbody>
+          <tr>
+            <td>Table row 1</td>
+          </tr>
+          <tr>
+            <td>Table row 2</td>
+          </tr>
+          <tr>
+            <td>Table row 3</td>
+          </tr>
+          <tr>
+            <td>Table row 4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="css_add_attributes_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="css_add_attributes_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="css_add_attributes_script">
+    $("#css_add_attributes_btn").click(
+        function() {
+            // individually assigning attributes
+            $("#css_add_attributes_table tr:even").css("color", "#fafafa");
+            $("#css_add_attributes_table tr:even").css("background-color", "#90a4ae");
+
+            // multiple attributes at the same time
+            $("#css_add_attributes_table tr:odd").css({
+                "color": "#fafafa",
+                "background-color": "#607d8b"
+            });
+        });
+  </script>
+
+
+  <!-- GET HTML and / or TEXT -->
+  <div id="get_html_text_entry" class="js-entry">
+    <h2>GET HTML and / or TEXT</h2>
+    <div id="get_html_text_content" class="js-results">
+      <button id="get_text_btn">get_text_btn</button>
+      <button id="get_html_btn">get_html_btn</button><br><br>
+      <div>
+        This text IS NOT within the &lt;aside&gt; attribute
+        <br>
+        <aside>
+          This text IS within the &lt;aside&gt; attribute
+        </aside>
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="get_html_text_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="get_html_text_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="get_html_text_script">
+    $("#get_text_btn").click(function(){
+        alert("Text: " + $("#get_html_text_content div").text());
+    });
+
+    $("#get_html_btn").click(function(){
+        alert("HTML: " + $("#get_html_text_content div").html());
+    });
+  </script>
+
+
+  <!-- GET VALUE / CSS STYLE- Displays the value and style attribute of an &lt;input&gt; element -->
+  <div id="get_value_style_entry" class="js-entry">
+    <h2>GET VALUE / CSS STYLE- Displays the value and style attribute of an &lt;input&gt; element</h2>
+    <div id="get_value_style_content" class="js-results">
+      <button id="get_value_style_btn">get_value_style_btn</button><br><br>
+      <input id="get_value_style_input" class="bg-plum  padding" value="Any old text will do..."><br><br>
+      Input value = <span id="get_value_results"></span><br>
+      Input padding: <span id="get_padding_results"></span><br>
+      Input background-color: <span id="get_background_results"></span>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="get_value_style_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="get_value_style_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="get_value_style_script">
+    $("#get_value_style_btn").click(function(){
+        var input_text = $("#get_value_style_input").val();
+        var input_styles_padding = $("#get_value_style_input").css("padding");
+        var input_styles_background = $("#get_value_style_input").css("background-color");
+
+        $("#get_value_results").text(input_text);
+        $("#get_padding_results").text(input_styles_padding);
+        $("#get_background_results").text(input_styles_background);
+    });
+  </script>
+
+
+  <!-- HIDE- select multiple elements using a single function -->
+  <div id="hide_multiple_entry" class="js-entry">
+    <h2>HIDE- query multiple elements using a single function</h2>
+    <ul>
+      <li><em>Design note:</em> Any remaining elements in the same row that are not hidden are "pulled" left.</li>
+      <li>Click any of the below divs to hide them</li>
+    </ul>
+    <div id="hide_multiple_content" class="js-results">
+      <div id="example_hide1" class="example_div pointer">
+        example_hide1
+      </div>
+      <div id="example_hide2" class="example_div pointer">
+        example_hide2
+      </div>
+      <div id="example_hide3" class="example_div pointer">
+        example_hide3
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="hide_multiple_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="hide_multiple_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="hide_multiple_script">
+    $("#example_hide1, #example_hide2, #example_hide3").click(function() {
+        $(this).hide();
+    });
+  </script>
+
+
+  <!-- INPUT with FOCUS- Applies a color to an input field, returns it back to previous color on blur -->
+  <div id="input_focus_entry" class="js-entry">
+    <h2>INPUT with FOCUS- Applies a color to an input field, returns it back to previous color on blur</h2>
+    <div id="input_focus_content" class="js-results">
+      <input type="text">
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="input_focus_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="input_focus_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="input_focus_script">
+    $('input').focus(
+        function() {
+            $(this).css({
+                'color': '#eceff1',
+                'background-color': '#607d8b'
+            });
+        });
+
+    $('input').blur(
+        function() {
+            $(this).css({
+                'color': '#263238',
+                'background-color': '#90a4ae'
+            });
+        });
+  </script>
+
+
+  <!-- JQUERY SELECTOR, first child within a specified element -->
+  <div id="selector_first_child_entry" class="js-entry">
+    <h2>JQUERY SELECTOR, first child within a specified element</h2>
+    <div id="selector_first_child_content" class="js-results">
+      <button onclick="changeFirstParagraph()">changeFirstParagraph()</button><br><br>
+      <div id="selector_first_child">
+        <div>This is a div element</div>
+        <p>This is a paragraph.</p>
+        <p>This,too, is a paragraph.</p>
+        <p>This is also a paragraph.</p>
+      </div>
+      <br>
+    </div>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="selector_first_child_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="selector_first_child_js" class="code-js"></code></pre></fieldset>
+  </div>
+
+  <script id="selector_first_child_script">
+    function changeFirstParagraph() {
+        $("#selector_first_child p").first().css({
+            "font-family": "Roboto Slab",
+            "font-size": "24px"
+        });
+    }
+  </script>
+
+
+  <!-- JQUERY USAGE- using jQuery within a vanilla javacript function -->
+  <div id="usage_inside_vanilla_entry" class="js-entry">
+    <h2>JQUERY USAGE- using jQuery within a vanilla javacript function</h2>
+    <div id="usage_inside_vanilla_content" class="js-results">
+      <button onclick="jQueryWithinVanilla()">jQueryWithinVanilla()</button><br><br>
+      <table id="usage_inside_vanilla_table">
+        <tbody>
+          <tr>
+            <td>Table row 1</td>
+          </tr>
+          <tr>
+            <td>Table row 2</td>
+          </tr>
+          <tr>
+            <td>Table row 3</td>
+          </tr>
+          <tr>
+            <td>Table row 4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="usage_inside_vanilla_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="usage_inside_vanilla_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="usage_inside_vanilla_script">
+    function jQueryWithinVanilla() {
+        // individually assigning attributes
+        $("#usage_inside_vanilla_table tr:even").css("color", "#fafafa");
+        $("#usage_inside_vanilla_table tr:even").css("background-color", "#90a4ae");
+
+        // multiple attributes at the same time
+        $("#usage_inside_vanilla_table tr:odd").css({
+            "color": "#fafafa",
+            "background-color": "#607d8b"
+        });
+    }
+  </script>
+
+
+  <!-- MODIFY OPACITY: fade a <div> from black to 20% of black to reveal a secret message. -->
+  <div id="modify_opacity_entry" class="js-entry">
+    <h2>MODIFY OPACITY: fade a &lt;div&gt; from black to 20% of black to reveal a secret message.</h2>
+    <ul>
+      <li><em>Design note:</em> The .fadeTo() class applies opacity to everything inside the specified element.</li>
+      <li>This uses a CSS negative margin trick to place the secret message "inside" the hiding div (it is not an actual child of the modify_opacity_div).</li>
+    </ul>
+    <div id="modify_opacity_content" class="js-results">
+      <button id="modify_opacity_btn">modify_opacity_btn</button><br><br>
+      <div id="modify_opacity_div">
+      </div>
+      <br>
+      <div id="modify_opacity_div2" class="text-center">
+        foo!
+      </div>
+    </div>
+    <br><br><br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="modify_opacity_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="modify_opacity_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="modify_opacity_script">
+    $("#modify_opacity_btn").click(function(){
+        $("#modify_opacity_div").fadeTo(2000, 0.20);
+    });
+  </script>
+
+
+  <!-- MOUSE EVENT, HOVER using <em>this</em>- Increase <div> size using .hover(), then return it to its default size using a callback-->
+  <div id="mouse_hover_entry" class="js-entry">
+    <h2>MOUSE EVENT, HOVER using <em>this</em>- Increase &lt;nav&gt; size using .hover(), then use a callback to return it to its default size</h2>
+    <div id="mouse_hover_content" class="js-results">
+      <div id="mouse_hover_div" class="example_div">
+        div1
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="mouse_hover_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="mouse_hover_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="mouse_hover_script">
+    $("#mouse_hover_div").hover(
+        function() {
+            mouse_hover_div_width = $(this).width();
+            $(this).css("width", "200px");
+        },
+        function() {
+            $(this).css("width", mouse_hover_div_width);
+        });
+  </script>
+
+
+  <!-- REMOVE ELEMENT -->
+  <div id="remove_element_entry" class="js-entry">
+    <h2>REMOVE ELEMENT</h2>
+    <ul>
+      <li>Similar to .empty(), the .remove() method takes elements out of the DOM. Use .remove() when you want to remove the element itself, as well as everything inside it. In addition to the elements themselves, all bound events and jQuery data associated with the elements are removed. To remove the elements without removing data and events, use .detach() instead.
+      </li>
+    </ul>
+    <div id="remove_element_content" class="js-results">
+      <button id="remove_element_btn">remove_element_btn</button><br><br>
+      <div id="remove_element_div" class="example_div">
+        div1
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="remove_element_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="remove_element_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="remove_element_script">
+    $("#remove_element_btn").click(function(){
+        $("#remove_element_content div").remove();
+    });
+  </script>
+
+
+  <!-- SET VALUE / CSS STYLE- Set the value and style attribute of an &lt;input&gt; text box element -->
+  <div id="set_value_style_entry" class="js-entry">
+    <h2>SET VALUE / CSS STYLE- Set the value and style attribute of an &lt;input&gt; text box element</h2>
+    <div id="set_value_style_content" class="js-results">
+      <button id="set_value_style_btn">set_value_style_btn</button><br><br>
+      <input id="set_value_style_input">
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="set_value_style_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="set_value_style_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="set_value_style_script">
+    $("#set_value_style_btn").click(function(){
+        $("#set_value_style_input").val("Nice!");
+        $("#set_value_style_input").addClass("bg-darkgrey text-light padding");
+    });
+  </script>
+
+
+  <!-- TOGGLE- toggle a button image (without using jQuery's built-in toggleClass() -->
+  <div id="toggle_without_toggleclass_entry" class="js-entry">
+    <h2>TOGGLE- toggle a button image (without using jQuery's built-in toggleClass()</h2>
+    <ul>
+      <li>Uses .substring() to return a search</li>
+      <li>Uses .lastIndexOf()</li>
+    </ul>
+    <div id="toggle_without_toggleclass_content" class="js-results">
+      <button id="toggle_without_toggleclass_btn" onclick="buttonImageToggle()"></button>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="toggle_without_toggleclass_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="toggle_without_toggleclass_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="toggle_without_toggleclass_script">
+    function buttonImageToggle() {
+        var imageURL_current = $("#toggle_without_toggleclass_btn").css("background-image");
+        var imageURL_home = "url(assets/images/home.png)";
+        var imageURL_android = "url(assets/images/android.png)";
+
+        //Substring search of current image name and path
+        //  -returns the text between the "/" and ".", Ie, the image name
+        var current_image = imageURL_current.substring(imageURL_current.lastIndexOf("/") + 1,
+            imageURL_current.lastIndexOf("."));
+
+        if (current_image == "home") {
+            $('#toggle_without_toggleclass_btn').css('background-image', imageURL_android);
+        } else {
+            $('#toggle_without_toggleclass_btn').css('background-image', imageURL_home);
+        }
+    }
+  </script>
+
+
+  <!-- TOGGLE with CALLBACK- Uses a toggle button to hide / show a div, with a slight delay -->
+  <div id="toggle_with_callback_entry" class="js-entry">
+    <h2>TOGGLE with CALLBACK- Uses a toggle button to hide / show a div, chained to a slight delay</h2>
+    <div id="toggle_with_callback_content" class="js-results">
+      <button id="toggle_with_callback_btn">toggle_with_callback_btn</button><br><br>
+      <div id="toggle_with_callback_div" class="example_div">
+        example div
+      </div>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="toggle_with_callback_html" class="code-html"></code></pre></fieldset>
+    <br>
+    <br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="toggle_with_callback_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="toggle_with_callback_script">
+    $("#toggle_with_callback_btn").click(function() {
+        $("#toggle_with_callback_div").toggle(700);
+    });
+  </script>
+
+
+  <!-- VIEWPORT DIMENSIONS -->
+  <div id="viewport_dimensions_entry" class="js-entry">
+    <h2>VIEWPORT DIMENSIONS</h2>
+    <ul>
+      <li>To see different values, refresh the page and then click the "Resize the div" button before getting the dimensions</li>
+    </ul>
+    <div id="viewport_dimensions_content" class="js-results">
+      <button id="viewport_dimensions_btn">viewport_dimensions_btn</button>
+      <button id="viewport_dimensions_modify_btn">Resize the div</button><br><br>
+      <div id="viewport_dimensions_div" class="example_div">
+        div1
+      </div>
+      <br><br>
+      Dimensions:
+      <ul>
+        <li>width (does not include padding or border): <span id="viewport_dimensions_div_width"></span></li>
+        <li>innerWidth (does not include border): <span id="viewport_dimensions_div_innerWidth"></span></li>
+        <li>outerWidth (true): <span id="viewport_dimensions_div_outerWidth"></span></li>
+        <li>height: <span id="viewport_dimensions_div_height"></span></li>
+        <li>innerHeight: <span id="viewport_dimensions_div_innerHeight"></span></li>
+        <li>outerHeight(true): <span id="viewport_dimensions_div_outerHeight"></span></li>
+      </ul>
+    </div>
+    <br>
+    <fieldset><legend>HTML</legend><pre class="prettyprint"><code id="viewport_dimensions_html" class="code-html"></code></pre></fieldset>
+    <br><br>
+    <fieldset><legend>Javascript / jQuery</legend><pre class="prettyprint"><code id="viewport_dimensions_js" class="code-js"></code></pre></fieldset>
+  </div>
+  <script id="viewport_dimensions_script">
+    $("#viewport_dimensions_btn").click(function(){
+        var $sample_div = $("#viewport_dimensions_div");
+
+        $("#viewport_dimensions_div_width").replaceWith($sample_div.width(), "px");
+        $("#viewport_dimensions_div_innerWidth").replaceWith($sample_div.innerWidth(), "px");
+        $("#viewport_dimensions_div_outerWidth").replaceWith($sample_div.outerWidth(true), "px");
+        $("#viewport_dimensions_div_height").replaceWith($sample_div.height(), "px");
+        $("#viewport_dimensions_div_innerHeight").replaceWith($sample_div.innerHeight(), "px");
+        $("#viewport_dimensions_div_outerHeight").replaceWith($sample_div.outerHeight(true), "px");
+    });
+
+    $("#viewport_dimensions_modify_btn").click(function(){
+        $("#viewport_dimensions_div").toggleClass( "example_div3" );
+    });
+  </script>
+
+
+
+<script>
+//These are used to display the HTML and JS that are specific to each entry
+//For reference purposes they can be safely ignored
+    $("#ajax_load_specific_html").text($("#ajax_load_specific_content").html());
+    $("#ajax_load_specific_js").text($("#ajax_load_specific_script").html());
+    $("#ajax_post_html").text($("#ajax_post_content").html());
+    $("#ajax_post_js").text($("#ajax_post_script").html());
+    $("#animate_simple_html").text($("#animate_simple_content").html());
+    $("#animate_simple_js").text($("#animate_simple_script").html());
+    $("#animate_multiple_html").text($("#animate_multiple_content").html());
+    $("#animate_multiple_js").text($("#animate_multiple_script").html());
+    $("#append_html").text($("#append_content").html());
+    $("#append_js").text($("#append_script").html());
+    $("#append_prepend_html").text($("#append_prepend_content").html());
+    $("#append_prepend_js").text($("#append_prepend_script").html());
+    $("#callback_html").text($("#callback_content").html());
+    $("#callback_js").text($("#callback_script").html());
+    $("#chaining_html").text($("#chaining_content").html());
+    $("#chaining_js").text($("#chaining_script").html());
+    $("#css_add_attributes_html").text($("#css_add_attributes_content").html());
+    $("#css_add_attributes_js").text($("#css_add_attributes_script").html());
+    $("#get_html_text_html").text($("#get_html_text_content").html());
+    $("#get_html_text_js").text($("#get_html_text_script").html()); 
+    $("#get_value_style_html").text($("#get_value_style_content").html());
+    $("#get_value_style_js").text($("#get_value_style_script").html());
+    $("#hide_multiple_html").text($("#hide_multiple_content").html());
+    $("#hide_multiple_js").text($("#hide_multiple_script").html());
+    $("#input_focus_html").text($("#input_focus_content").html());
+    $("#input_focus_js").text($("#input_focus_script").html());
+    $("#selector_first_child_html").text($("#selector_first_child_content").html());
+    $("#selector_first_child_js").text($("#selector_first_child_script").html());
+    $("#usage_inside_vanilla_html").text($("#usage_inside_vanilla_content").html());
+    $("#usage_inside_vanilla_js").text($("#usage_inside_vanilla_script").html());
+    $("#modify_opacity_html").text($("#modify_opacity_content").html());
+    $("#modify_opacity_js").text($("#modify_opacity_script").html());
+    $("#mouse_hover_html").text($("#mouse_hover_content").html());
+    $("#mouse_hover_js").text($("#mouse_hover_script").html());
+    $("#remove_element_html").text($("#remove_element_content").html());
+    $("#remove_element_js").text($("#remove_element_script").html());
+    $("#set_value_style_html").text($("#set_value_style_content").html());
+    $("#set_value_style_js").text($("#set_value_style_script").html());
+    $("#toggle_without_toggleclass_html").text($("#toggle_without_toggleclass_content").html());
+    $("#toggle_without_toggleclass_js").text($("#toggle_without_toggleclass_script").html());
+    $("#toggle_with_callback_html").text($("#toggle_with_callback_content").html());
+    $("#toggle_with_callback_js").text($("#toggle_with_callback_script").html());
+    $("#viewport_dimensions_html").text($("#viewport_dimensions_content").html());
+    $("#viewport_dimensions_js").text($("#viewport_dimensions_script").html());
+</script>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+</body>
+</html>

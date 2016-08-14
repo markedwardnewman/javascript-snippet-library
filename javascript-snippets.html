@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    My javascript snippet library, pure and simple
+  </title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab%7CRoboto:400,400italic,700' rel='stylesheet' type='text/css'>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #eceff1;
+    }
+    
+    a,
+    a:visited {color: #37474F;}
+
+    h1,h2,h3,h4 {
+      margin: 0;
+      font-family: 'Roboto Slab', sans-serif;
+    }
+    
+    h2 {
+      font-size: 24px;
+    }
+
+    hr { margin: 0;}
+
+    ul {margin: 16px 16px 0 0;}
+    li {margin: 0 16px 8px 0;}
+    li:last-child {margin: 0 16px 0 0;}
+
+    pre {
+      display: inline-block;
+      padding: 16px 16px 0 0;
+      margin: 16px 16px 0 0;
+      font-size: 16px;
+      border: thin solid grey;
+      border-radius: 8px;
+      background: #607d8b;
+      color: #fafafa;
+    }
+
+    .js-content,
+    .js-results {padding: 16px 16px 0 16px;}
+    .js-entry {padding: 24px 32px 32px 32px;}
+    .js-entry:nth-of-type(even) {background: #cfd8dc;}
+    .js-menu {
+      padding: 16px;
+      color: #eceff1;
+      background: #607d8b;      
+    }
+  </style>
+</head>
+
+<body>
+  <div class="js-menu">
+    <h1>My vanilla javascript snippet library&nbsp;&lt;|&gt;&nbsp;<a href="jquery-snippets.html">jQuery snippet library</a>&nbsp;&lt;|&gt;&nbsp;<a href="jquery-ui-snippets.html">jQuery-ui snippet library</a></h1>
+  </div>
+  <div class="js-entry">
+    <h2>Javascript Snippet Quick Reference:</h2>
+    <ul>
+      <li><a href="#array_traversal">ARRAY TRAVERSAL</a>- using WHILE loop</li>
+      <li><a href="#cookies_demo">COOKIES</a>- create, delete, verify</li>
+      <li><a href="#css_modify">CSS MODIFY</a></li>
+      <li><a href="#css_modify_of_type">CSS MODIFY of TYPE</a>- adds all elements with a specified tag name to an array, then modifies them</li>
+      <li><a href="#date_time_timer">DATE / TIME / TIMER</a>- formatted, local and live</li>
+      <li><a href="#document_url">DOCUMENT URL</a>- display, redirect, back, forward</li>
+      <li><a href="#document_viewport">DOCUMENT VIEWPORT</a>- show inner dimensions</li>
+      <li><a href="#find_replace">FIND and REPLACE</a></li>
+      <li><a href="#form_prompt">FORM using PROMPT</a></li>
+      <li><a href="#function_closures">FUNCTION CLOSURES</a>- a function having access to the parent scope, even after the parent function has closed.</li>
+      <li><a href="#function_parameters">FUNCTION PARAMETERS / ARGUMENTS</a></li>
+      <li><a href="#json_manipulation">JSON manipulation</a></li>
+      <li><a href="#mouse_events">MOUSE EVENTS</a></li>
+      <li><a href="#numeric_formatting">NUMERIC FORMATTING</a></li>
+      <li><a href="#object_prototype">OBJECT PROTOTYPE</a>- basic</li>
+      <li><a href="#object_constructor">OBJECT PROTOTYPE / CONSTRUCTOR</a>- initialize, add, and update</li>
+      <li><a href="#object_traversal">OBJECT TRAVERSAL</a>- using for/in loop</li>
+      <li><a href="#object_date_manipulation">OBJECT MANIPULATION</a>- using DATE</li>
+      <li><a href="#random_number_manipulation">RANDOM NUMBER MANIPULATION</a>- with contraints</li>
+      <li><a href="#regex_replace">REGULAR EXPRESSION</a>- using find and replace</li>
+      <li><a href="#string_comparison">STRING COMPARISON</a></li>
+      <li><a href="#switch_trycatch">SWITCH</a>- using TRY/CATCH error handling</li>
+      <li><a href="#switch_fallthrough">SWITCH</a>- with fall-through</li>
+    </ul>
+    <br>
+    <h2>NOTES:</h2><br>
+    IDs, class, and variable names are intentionally descriptive and are quite long.  Shorter names may be more desirable for production code.
+  </div>
+  <hr>
+  
+  
+  <!-- ARRAY TRAVERSAL- using WHILE loop -->
+  <div class="js-entry">
+    <a id="array_traversal"><h2>ARRAY TRAVERSAL- using WHILE loop</h2></a>
+    <div class="js-content">
+      <button onclick="displaySelectMonths()">displaySelectMonths()</button>
+      <div class="js-results">
+       Array traversal result: <span id="display_select_months"></span>
+      </div>
+    </div>
+    <pre>
+      function displaySelectMonths() {
+          var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+          var month_select = ["January", "March", "April", "May", "December"];
+          var i = 0;
+          var month_found = [];
+
+          while (month_select[i]) {
+              if (month.indexOf(month_select[i]) != -1) {
+                  month_found.push(month_select[i]);
+              }
+
+              i++;
+          }
+
+          document.getElementById("display_select_months").innerHTML = month_found;
+      }
+    </pre>
+  </div>
+
+  
+  <!-- BROWSER ATTRIBUTES -->
+<!-- the HTML and javascript for this uses multiple ids with the same name, needs to be corrected before being shown
+  <div class="js-entry">
+    <a id="browser_attributes"><h2>BROWSER ATTRIBUTES</h2></a>
+    <div class="js-content">
+    <fieldset>
+      <legend>Select which browser attributes to display</legend>
+      <input type="checkbox" id="browser_attribute" value="appVersion"> - appVersion<br>
+      <input type="checkbox" id="browser_attribute" value="userAgent"> - userAgent<br>
+      <input type="checkbox" id="browser_attribute" value="platform"> - platform<br>
+      <br>
+      <input type="button" value="Show browser info" onclick="getCheckedBoxes()">
+    </fieldset>
+      <div class="js-results">
+        appVersion: <span id="show_app_version"></span>
+        <br>
+        userAgent: <span id="show_app_user_agent"></span>
+        <br>
+        platform: <span id="show_app_platform"></span>
+      </div>
+    </div>
+    <pre>
+      function getCheckedBoxes() {
+          document.getElementById("show_app_version").innerHTML = "";
+          document.getElementById("show_app_user_agent").innerHTML = "";
+          document.getElementById("show_app_platform").innerHTML = "";
+
+          var checkboxes = document.getElementsByName('browser_attribute');
+          var checkboxesChecked = [];
+
+          for (var i = 0; i &lt; checkboxes.length; i++) {
+              if (checkboxes[i].checked) {
+                  checkboxesChecked.push(checkboxes[i].value);
+              }
+          }
+
+          for (var ii = 0; ii &lt; checkboxesChecked.length; ii++) {
+              if (checkboxesChecked[ii] == "appVersion") {
+                  document.getElementById("show_app_version").innerHTML = navigator.appVersion;
+              } else if (checkboxesChecked[ii] == "userAgent") {
+                  document.getElementById("show_app_user_agent").innerHTML = navigator.userAgent;
+              } else if (checkboxesChecked[ii] == "platform") {
+                 document.getElementById("show_app_platform").innerHTML = navigator.platform;
+              }
+          }
+      }
+    </pre>
+  </div>
+-->  
+  
+  <!-- COOKIES- create, delete, verify -->
+  <div class="js-entry">
+    <a id="cookies_demo"><h2>COOKIES- create, delete, verify</h2></a>
+    <div class="js-content">
+      Input cookie1 value: <input id="input_cookie1" type="text">
+      <br>
+      <br>
+      Input cookie2 value: <input id="input_cookie2" type="text">
+      <br>
+      <br>
+      Input cookie3 value: <input id="input_cookie3" type="text">
+      <br>
+      <br>
+      Create 3 cookies using the supplied values from above <button onclick="createCookies()">createCookies()</button>
+      <div class="js-results">
+        Show cookie creation validation: <span id="show_cookie_creation_validation"></span>
+      </div>
+      <br>
+      Delete cookie: Name <button onclick="deleteCookie('cookie1')">deleteCookie('cookie1')</button>
+      <br>
+      Delete cookie: School <button onclick="deleteCookie('cookie2')">deleteCookie('cookie2')</button>
+      <br>
+      Delete cookie: Hobby <button onclick="deleteCookie('cookie3')">deleteCookie('cookie3')</button>
+      <div class="js-results">
+        Delete cookie validation: <span id="show_cookie_deleted"></span>
+      </div> 
+      <br>
+      Show existing cookies (for this example) <button onclick="showCookies()">Show cookies</button>
+      <br>
+    </div>
+    <pre>
+      function createCookies() {
+          //set cookie expiration date variable
+          var d = new Date();
+          var expiration_days = 30;
+          d.setTime(d.getTime() + (expiration_days * 24 * 60 * 60 * 1000));
+          var expires = "expires=" + d.toGMTString();
+
+          //set all the other cookie variables
+          var cookie1 = "cookie1";
+          var cookie1_value = document.getElementById("input_cookie1").value;
+          var cookie2 = "cookie2";
+          var cookie2_value = document.getElementById("input_cookie2").value;
+          var cookie3 = "cookie3";
+          var cookie3_value = document.getElementById("input_cookie3").value;
+
+          setCookie(cookie1, cookie1_value, expires);
+          setCookie(cookie2, cookie2_value, expires);
+          setCookie(cookie3, cookie3_value, expires);
+
+          //notify user that the cookies were created
+          document.getElementById("show_cookie_creation_validation").innerHTML = "document.cookie has been modified";
+
+          cookieCheck();
+      }
+
+      function setCookie(cookie_name, cookie_value, expires) {
+          if (cookie_value !== "" &amp;&amp; cookie_value !== null) {
+              document.cookie = cookie_name + "=" + cookie_value + "; " + expires;
+          } else {
+              //ensure that a key is not created without a value 
+              deleteCookie(cookie_name);
+          }
+      }
+
+      function deleteCookie(cookie_name) {
+          document.cookie = cookie_name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+          document.getElementById("show_cookie_deleted").innerHTML = "A cookie has been deleted!";
+      }
+
+      function getCookie(cookie_name) {
+          var name = cookie_name + "=";
+          var cookie_pair = document.cookie.split(';');
+
+          for (var i = 0; i &lt; cookie_pair.length; i++) {
+              var cookie_pair_string = cookie_pair[i];
+
+              while (cookie_pair_string.charAt(0) == ' ') {
+                  cookie_pair_string = cookie_pair_string.substring(1);
+              }
+              
+              if (cookie_pair_string.indexOf(name) === 0) {
+                  return cookie_pair_string.substring(name.length, cookie_pair_string.length);
+              }
+          }
+
+          return "";
+      }
+
+      function showCookies() {
+          alert(document.cookie);
+      }
+
+      function cookieCheck() {
+          var cookie1_value = getCookie("cookie1");
+          var cookie2_value = getCookie("cookie2");
+          var cookie3_value = getCookie("cookie3");
+
+          if (cookie1_value !== "")
+              {}
+          else {
+              alert("Please enter a value for cookie1, then press the *createCookies()* button and try again");
+          }
+
+          if (cookie2_value !== "")
+              {}
+          else {
+              alert("Please enter a value for cookie2, then press the *createCookies()* button and try again");
+          }
+
+          if (cookie3_value !== "")
+              {}
+          else {
+              alert("Please enter a value for cookie3, then press the *createCookies()* button and try again");
+          }
+
+          if (cookie1_value !== "" &amp;&amp; cookie2_value !== "" &amp;&amp; cookie3_value !== "") {
+              alert("All cookies have been successfully set!\n\n" +
+                  "This is the content for the cookies on this page:\n\n" + document.cookie);
+          }
+      }
+    </pre>
+  </div>
+  
+
+  <!-- CSS MODIFY -->
+  <div class="js-entry">
+    <a id="css_modify"><h2>CSS MODIFY</h2></a>
+    <div class="js-content">
+      <button type="button" id="btn_1" onclick="showReplacement()">showReplacement()</button>
+    </div>
+    <pre>
+      function showReplacement() {
+          var color = "red";
+          
+          document.getElementById("btn_1").innerHTML = color;
+          document.getElementById("btn_1").style.color = color;
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- CSS MODIFY of TYPE- adds all elements with a specified tag name to an array -->
+  <div class="js-entry">
+    <a id="css_modify_of_type"><h2>CSS MODIFY of TYPE</h2></a>
+    <ul>
+      <li>adds all elements with a specified tag name to an array</li>
+      <li><em>Design note:</em> Page height changes occur above the modified element/s.</li>
+    </ul>
+    <div class="js-content">
+      Enter a new pixel size for all h4 elements on this page: <input id="input_font_size" value="16" type="number"> <button type="button" onclick="changeFontSize()">Change font size</button>
+      <div class="display-results">
+        <br>
+        <h4>This is an h4 element!</h4>
+      </div>
+    </div>
+    <pre>
+      function changeFontSize() {
+          //this affects all h4 elements in the DOM
+          var h4_array = document.getElementsByTagName("h4");
+
+          //notice the need to specify the "px" modifier
+          var font_size = document.getElementById("input_font_size").value + "px";
+
+          for (var i = 0; i &lt; h4_array.length; i++) {
+              h4_array[i].style.fontSize = font_size;
+          }
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- DATE / TIME / TIMER, formatted, local and live -->
+  <div class="js-entry bg-odd">
+    <a id="date_time_timer"><h2>DATE / TIME / TIMER, formatted, local and live</h2></a>
+    <div class="js-content">
+      Show date and time: <button onclick="runClock()">runClock()</button>
+      <div class="js-results">
+        Local time is: <span id="show_date_time_local"></span>
+      </div>
+    </div>
+    <pre>
+      function runClock() {
+          setInterval(timeLocal, 1000);
+      }
+      
+      function timeLocal() {
+          var time_local = new Date();
+          
+          document.getElementById("show_date_time_local").innerHTML = time_local.toLocaleTimeString();
+      }
+    </pre>
+    <br>
+    <br>
+    <div class="js-content">
+      Start / stop a clock using one button <button id="stopwatch" onclick="startClock()">startClock()</button>
+      <div class="js-results">
+        Local time is: <span id="show_date_time_iterate"></span>
+      </div>
+    </div>
+    <pre>
+      function timeLocal2() {
+          var time_local = new Date();
+          
+          document.getElementById("show_date_time_iterate").innerHTML = time_local.toLocaleTimeString();
+      } 
+      
+      function startClock() {
+          document.getElementById("stopwatch").innerHTML = "Stop clock";       
+          document.getElementById("stopwatch").setAttribute('onclick','stopClock()');          
+          clockInterval = setInterval(timeLocal2, 1000);   
+      }
+      
+      function stopClock() {    
+          clearInterval(clockInterval);
+          document.getElementById("stopwatch").innerHTML = "Start clock";       
+          document.getElementById("stopwatch").setAttribute('onclick','startClock()');    
+      }
+    </pre>
+  </div>
+
+
+  <!-- DOCUMENT URL- display, redirect, back, forward -->
+  <div class="js-entry">
+    <a id="document_url"><h2>DOCUMENT URL- display, redirect, back, forward</h2></a>
+    <div class="js-content">
+      Display the URL location of the current page <button onclick="displayLocation()">Show page URL</button>
+      <div class="js-results">
+        This page's URL is: <span id="show_page_url"></span>
+        <br>
+        <br>
+      </div>
+      Change the URL location and load a new document <button onclick="changeLocation()">Open new URL</button>
+      <br>
+      <br>
+      BACK and FORWARD buttons: <button onclick="previousURL()">&lt;-</button> <button onclick="nextURL()">-&gt;</button>
+      <br>
+    </div>
+    <pre>
+      function displayLocation() {
+          document.getElementById("show_page_url").innerHTML = window.location.href;
+      }
+
+      function changeLocation() {
+          window.location.assign("http://markedwardnewman.com/");
+      }
+
+      function previousURL() {
+          window.history.back();
+      }
+
+      function nextURL() {
+          window.history.forward();
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- DOCUMENT VIEWPORT -->
+  <div class="js-entry bg-odd">
+    <a id="document_viewport"><h2>DOCUMENT VIEWPORT</h2></a>
+    <div class="js-content">
+      <button onclick="displayViewportInfo()">Show viewport size</button>
+      <div class="js-results">
+        Viewport width: <span id="show_viewport_width"></span>
+        <br>
+        Viewport height: <span id="show_viewport_height"></span>
+      </div>
+    </div>
+    <pre>
+      function displayViewportInfo() {
+          document.getElementById("show_viewport_width").innerHTML = window.innerWidth + " px";
+          document.getElementById("show_viewport_height").innerHTML = window.innerHeight + " px";
+      }
+    </pre>
+  </div>
+  
+  
+  <!--FIND and REPLACE-->
+  <div class="js-entry">
+    <a id="find_replace"><h2>FIND and REPLACE</h2></a>
+    <div class="js-content">
+      <div id="search_scope">
+        Delivering device and platform independent, responsive, sleek, easily modifiable, highly effective sites is always my goal.  Most of the tools I use to do that change like the seasons, but a trusty text editor will always remain my tool of choice.
+      </div>
+      <div class="js-results">
+        Find... <input id="input_find">
+        Replace... <input id="input_replace">
+        <button onclick="replaceString()">replaceString()</button>
+      </div>
+    </div>
+    <pre>
+      function replaceString() {
+          var search_content = document.getElementById("search_scope").innerHTML;
+          var find_string = document.getElementById("input_find").value;
+          var replace_string = document.getElementById("input_replace").value;
+          var search_content_modified = search_content.replace(find_string, replace_string);
+
+          document.getElementById("search_scope").innerHTML = search_content_modified;
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- FORM using PROMPT -->
+  <div class="js-entry">
+    <a id="form_prompt"><h2>FORM using PROMPT</h2></a>
+    <div class="js-content">
+      Type something in the prompt box: <button onclick="queryPrompt()">queryPrompt()</button>
+      <div class="js-results">
+        You typed: <span id="show_prompt_result"></span>
+      </div>
+    </div>
+    <pre>
+      function queryPrompt() {
+          var user_input = prompt("Type something...", "something");
+
+          if (user_input !== "") {
+              document.getElementById("show_prompt_result").innerHTML = user_input;
+          }
+          else {
+              document.getElementById("show_prompt_result").innerHTML = "No information provided!";
+          }
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- FUNCTION CLOSURES -->
+  <div class="js-entry">
+    <a id="function_closures"><h2>FUNCTION CLOSURES - a function having access to the parent scope, even after the parent function has closed.</h2></a>
+    <ul>
+      <li>Formed when a nested function is defined inside of another function</li>
+      <li>This allows access to the outer functions' variables</li>
+      <li>Useful for encapsulating and preserving scope (variable values)</li>
+    </ul>
+    <div class="js-content">
+      <button type="button" onclick="closureCountExample()">closureCountExample ()</button>
+      <div class="js-results">
+        Useful for counters: <span id="function_closure">0</span>
+      </div>
+    </div>
+    <pre>
+      var closureCount = (function () {
+          var counter = 0;
+          return function () {return counter += 1;};
+      })();
+
+      function closureCountExample() {
+          document.getElementById("function_closure").innerHTML = closureCount();
+      }
+    </pre>
+    <div class="js-content">
+      Useful for appending lists.  Enter a string below (as many times as you'd like):
+      <br>
+      <input id="input_text_4_3_1">
+      <button type="button" onclick="closureAppendList(); clearField()">addItem</button>
+      <div class="js-results">
+        List items:
+        <ul id="show_closure"></ul>
+      </div>
+    </div>
+    <pre>
+      function closureAppendList() {
+          invokeList = populateList();
+          invokeList();
+      }
+
+      function populateList() {
+          var list_item = document.createElement("LI");
+          var user_text_4_3_1 = document.createTextNode(document.getElementById("input_text_4_3_1").value);
+          var appendList = function() {
+              list_item.appendChild(user_text_4_3_1);
+              document.getElementById("show_closure").appendChild(list_item);
+          };
+
+          return appendList;
+      }
+
+      function clearField() {
+          document.getElementById("input_text_4_3_1").value = "";
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- FUNCTION PARAMETERS / ARGUMENTS -->
+  <div class="js-entry bg-odd">
+    <a id="function_parameters"><h2>FUNCTION PARAMETERS / ARGUMENTS</h2></a>
+    <div class="js-content">
+      input_function_parameter1: <input id="input_function_parameter1" type="number">
+      <br>
+      input_function_parameter2: <input id="input_function_parameter2" type="number">
+      <br>
+      <br>
+      <button onclick="showAverage()">showAverage()</button>
+      <div class="js-results">
+        inputed_average: <span id="inputed_average"></span>
+      </div>
+    </div>
+    <pre>
+      function showAverage () {
+          var value1 = Number(document.getElementById("input_function_parameter1").value);
+          var value2 = Number(document.getElementById("input_function_parameter2").value);
+          document.getElementById("inputed_average").innerHTML = findAverage(value1, value2);
+      };
+
+      function findAverage(value1, value2) {
+          var average = (value1 + value2) / 2;
+          return average;
+      };
+    </pre>
+  </div>
+  
+  
+  <!-- JSON manipulation -->
+  <div class="js-entry">
+    <a id="json_manipulation"><h2>JSON manipulation</h2></a>
+    <div class="js-content">
+      <button onclick="displaySkiResorts()">displaySkiResorts ()</button>
+      <div class="js-results">
+        Ski resorts: <span id="show_json_example"></span>
+      </div>
+    </div>
+    <pre>
+      function displaySkiResorts() {
+          var i = 0;
+          var json_object = '{"skiResorts":[' +
+              '{"resortName":"Alta","resortState":"Utah" },' +
+              '{"resortName":"Aspen","resortState":"Colorado" },' +
+              '{"resortName":"Bear Valley","resortState":"California" }]}';
+
+          json_object_parsed = JSON.parse(json_object);
+
+          for (; i &lt; 3; i++) {
+              var append_show_json_example = document.getElementById("show_json_example");
+              var skiResort = json_object_parsed.skiResorts[i].resortName + ": " + json_object_parsed.skiResorts[i].resortState + "  |  ";
+              append_show_json_example.appendChild(document.createTextNode(skiResort));
+          }
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- MOUSE EVENTS -->
+  <div class="js-entry">
+    <a id="mouse_events"><h2>MOUSE EVENTS</h2></a>
+    <div class="js-content">
+      Hover your mouse over this image:
+      <div class="js-results show-html">
+        <img src="assets/images/my_avatar_right.jpg" alt="image swap demo" onmouseover="swapImage(this, 'assets/images/', 'my_avatar_left.jpg')" onmouseout="swapImage(this, 'assets/images/', 'my_avatar_right.jpg')">
+      </div>
+    </div>
+    <pre>
+      function swapImage(this_keyword, image_path, image_name) {
+          //When invoking this function, the keyword 'this' must be used as the first parameter
+          //    Usage example: swapImage(this, 'assets/images/', 'my_avatar_right.jpg')
+          
+          this_keyword.src = image_path + image_name;
+      }
+    </pre>
+    <div class="js-content">
+      Press and hold your left mouse button over this button: <button id="button_hold" onmousedown="showOnMouseDown()" onmouseup="showOnMouseUp()">HOLD ME DOWN</button>
+      <div class="js-results">
+        <span id="show_onmouse">Nothing exciting yet...</span>
+      </div>
+    </div>
+    <pre>
+      function showOnMouseDown() {
+          document.getElementById("show_onmouse").style.color = "red";
+          document.getElementById("show_onmouse").innerHTML = "SUPER EXCITING!";
+      }
+
+      function showOnMouseUp() {
+          document.getElementById("show_onmouse").style.color = "black";
+          document.getElementById("show_onmouse").innerHTML = "Nothing exciting yet...";
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- NUMERIC FORMATTING -->
+  <div class="js-entry">
+    <a id="numeric_formatting"><h2>NUMERIC FORMATTING</h2></a>
+    <div class="js-content">
+      Enter a numeric value containing more than two decimal places: <input id="format_number">
+      <br>
+      <br>
+      <button onclick="formatNumber()">formatNumber ()</button>
+      <div class="js-results">
+        Formatted Numeric: <span id="format_number_modified"></span>
+      </div>
+    </div>
+    <pre>
+      function formatNumber() {
+          var user_input = document.getElementById("format_number").value;
+
+          document.getElementById("format_number_modified").innerHTML = "$" + Number(user_input).toFixed(2);
+      }
+    </pre>
+  </div>
+  
+  
+  <!--OBJECT PROTOTYPE- basic-->
+  <div class="js-entry">
+    <a id="object_prototype"><h2>OBJECT PROTOTYPE- basic</h2></a>
+    <div class="js-content">
+      <button onclick="populateObject()">populateObject()</button>
+      <br>
+      <div class="js-results">
+        object_property1: <span id="object_property1"></span>
+        <br>
+        object_property2: <span id="object_property2"></span>
+      </div>
+      <br>
+      <button onclick="objectName.method1()">objectDefinition.method1 ()</button>
+      <button onclick="objectName.method2()">objectDefinition.method2 ()</button>
+      <div class="js-results">
+        object_method1: <span id="confirm_method1"></span>
+        <br>
+        object_method2: <span id="confirm_method2"></span>
+      </div>
+    </div>
+    <pre>
+      var object_type = "A balloon chair!"; //GLOBAL VARIABLE
+      var object_maxPassengers = 1; //GLOBAL VARIABLE
+      var objectName = new objectPrototype(object_type, object_maxPassengers); //GLOBAL VARIABLE
+      
+      function objectPrototype(property1, property2) {
+          this.property1 = property1;
+          this.property2 = property2;
+          this.method1 = function() {
+              document.getElementById("confirm_method1").innerHTML = "We have lift off!";
+          };
+          this.method2 = function() {
+              document.getElementById("confirm_method2").innerHTML = "Two feet high and rising!";
+          };
+      }
+
+      function populateObject() {
+          document.getElementById("object_property1").innerHTML = objectName.property1;
+          document.getElementById("object_property2").innerHTML = objectName.property2;
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- OBJECT PROTOTYPE / CONSTRUCTOR- initialize, add, and update -->
+  <div class="js-entry">
+    <a id="object_constructor"><h2>OBJECT PROTOTYPE / CONSTRUCTOR- initialize, add, and update</h2></a>
+    <div class="js-content">
+      <button onclick="initializePlayer()">initializePlayer ()</button>
+      <div class="js-results">
+        First Name: <span id="player_first_name"></span>
+        <br>
+        Last Name: <span id="player_last_name"></span>
+        <br>
+        Height: <span id="player_height"></span>
+        <br>
+        Years in league: <span id="player_league_years"></span>
+        <br>
+        Team Name: <span id="player_team"></span>
+      </div>
+      <br>
+      Enter a number to modify the 'Years in league' property above: <input id="input_update_league_years" type="number">
+      <button onclick="new_player.updateYearsInLeague(document.getElementById('input_update_league_years').value)">updateYearsInLeague ()</button>
+      <br>
+      <br>
+      Click to add a new property to the object... <button onclick="addTeam()">addTeam ()</button>
+      <br>
+      <br>
+      Enter a new Team Name to modify the newly added property above: <input id="input_update_team">
+      <button onclick="updateTeam(document.getElementById('input_update_team').value)">updateTeam ()</button>
+    </div>
+    <pre>
+      //the object prototype
+      function player(firstName, lastName, height, yearsInLeague) {
+          this.firstName = firstName;
+          this.lastName = lastName;
+          this.height = height;
+          this.yearsInLeague = yearsInLeague;
+          this.updateYearsInLeague = function(yearsInLeague) {
+              document.getElementById("player_league_years").innerHTML = yearsInLeague;
+          }
+      }
+
+
+      //initializes the object
+      function initializePlayer() {
+          new_player = new player("Mark", "Newman", "5'11", 1); // GLOBAL VARIABLE
+
+          document.getElementById("player_first_name").innerHTML = new_player.firstName;
+          document.getElementById("player_last_name").innerHTML = new_player.lastName;
+          document.getElementById("player_height").innerHTML = new_player.height;
+          document.getElementById("player_league_years").innerHTML = new_player.yearsInLeague;
+      }
+
+
+      //add a property to object
+      function addTeam() {
+          player.prototype.team = "The Nuanced Coders";
+
+          document.getElementById("player_team").innerHTML = new_player.team;
+      }
+
+
+      //update an existing property
+      function updateTeam(new_team_name) {
+          player.prototype.updateTeam = function() {
+              new_player.team = new_team_name;
+              document.getElementById("player_team").innerHTML = new_player.team;
+          }
+
+          new_player.updateTeam();
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- OBJECT TRAVERSAL- using FOR/IN loop -->
+  <div class="js-entry">
+    <a id="object_traversal"><h2>OBJECT TRAVERSAL- using FOR/IN loop</h2></a>
+    <div class="js-content">
+      <button onclick="displayBirthMonth()">displayBirthMonth()</button>
+      <div class="js-results">
+        <span id="object_traversal_display"></span>
+      </div>
+    </div>
+    <pre>
+      function displayBirthMonth() {
+          var birthMonth = {
+              January: "Julia",
+              February: "Febrarian",
+              March: "Mary",
+              April: "Abrilia",
+              May: "Ma",
+              June: "Junia",
+              July: "Juli",
+              August: "Auggy",
+              September: "Seth",
+              October: "Oggy",
+              November: "Novellia",
+              December: "Deccy"
+          }
+
+          var month_nickname = "";
+          var i = 0;
+
+          for (i in birthMonth) {
+              month_nickname += i + ":" + birthMonth[i] + "<br>";
+          }
+
+          document.getElementById("object_traversal_display").innerHTML = month_nickname;
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- OBJECT MANIPULATION- using DATE-->
+  <div class="js-entry">
+    <a id="object_date_manipulation"><h2>OBJECT MANIPULATION- using DATE</h2></a>
+    <div class="js-content">
+      Create a date object, input a date (formatted like the default value), then display it.
+      <br>
+      <br>
+      <input id="input_user_defined_date" value="01Jan2020">
+      <button onclick="showUserDate()">showUserDate()</button>
+      <div class="js-results">
+        <span id="show_day_of_week">Wednesday</span>,&nbsp;
+        <span id="show_month">January</span>&nbsp;
+        <span id="show_day_of_month">1</span>,
+        <span id="show_year">2020</span>
+      </div>
+    </div>
+    <pre>
+      function showUserDate() {
+          var date = new Date(document.getElementById("input_user_defined_date").value);
+          var day_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+          document.getElementById("show_day_of_month").innerHTML = date.getDate();
+          document.getElementById("show_month").innerHTML = month[date.getMonth()];
+          document.getElementById("show_year").innerHTML = date.getFullYear();
+          document.getElementById("show_day_of_week").innerHTML = day_of_week[date.getDay()];
+      }
+    </pre>
+  </div>
+  
+  
+  <!-- RANDOM NUMBER MANIPULATION- with contraints-->
+  <div class="js-entry">
+    <a id="random_number_manipulation"><h2>RANDOM NUMBER MANIPULATION- with contraints</h2></a>
+    <div class="js-content">
+      Display a random number between, and including, 25 to 75
+      <br>
+      -- Uses a recursive call if the random number is outside of scope
+      <br>
+      <br>
+      <button onclick="randomRun()">randomRun ()</button>
+      <div class="js-results">
+        Seed: <span id="random_seed"></span>
+        <br>
+        Random #: <span id="random_number"></span>
+      </div>
+    </div>
+    <pre>
+    function randomRun() {
+        var rand_seed = Math.random();
+        var rand_seed_modified = (rand_seed * 100).toFixed(0);
+
+        if ((rand_seed_modified >= 25) &amp;&amp; (rand_seed_modified &lt;= 75)) {
+            document.getElementById("random_number").innerHTML = rand_seed_modified;
+        } else {
+            randomRun();
+        }
+
+        //shows if the random seed is outside of scope
+        document.getElementById("random_seed").innerHTML = rand_seed;
+    }
+    </pre>
+  </div>
+  
+  
+  <!-- REGULAR EXPRESSION- using find and replace -->
+  <div class="js-entry">
+    <a id="regex_replace"><h2>REGULAR EXPRESSION- using find and replace</h2></a>
+    <div class="js-content">
+      Enter a sentence that contains the word "cry": <input id="input_regex_replace">
+      <button onclick="regexReplace()">regexReplace ()</button>
+      <div class="js-results">
+        Original sentence: <span id="regex_replace_original"></span>
+        <br>
+        Modified sentence: <span id="regex_replace_modified"></span>
+      </div>
+    </div>
+    <pre>
+      function regexReplace() {
+          var user_text = document.getElementById("input_regex_replace").value;
+          var regex_find = /cry/i;
+          var regex_replace = "laugh";
+          var user_text_modified = user_text.replace(regex_find, regex_replace);
+
+          document.getElementById("regex_replace_original").innerHTML = user_text;
+          document.getElementById("regex_replace_modified").innerHTML = user_text_modified;
+      }
+    </pre>
+  </div>
+
+
+  <!-- STRING COMPARISON -->
+  <div class="js-entry">
+    <a id="string_comparison"><h2>STRING COMPARISON</h2></a>
+    <div class="js-content">
+      Compare <input id="input_comparison1"> with <input id="input_comparison2">
+      <button onclick="compareStrings()">compareStrings()</button>
+      <div class="js-results">
+        The strings are... <span id="comparison_answer"></span>
+      </div>
+    </div>
+    <pre>
+      function compareStrings() {
+          var user_input1 = document.getElementById("input_comparison1").value;
+          var user_input2 = document.getElementById("input_comparison2").value;
+          var user_input_compare = user_input1.localeCompare(user_input2);
+
+          if (user_input_compare === 0) {
+              document.getElementById("comparison_answer").innerHTML = "equal";
+          } else {
+              document.getElementById("comparison_answer").innerHTML = "not equal";
+          }
+      }
+    </pre>
+  </div>
+
+
+  <!-- SWITCH with TRY/CATCH error handling -->
+  <div class="js-entry">
+    <a id="switch_trycatch"><h2>SWITCH with TRY/CATCH error handling</h2></a>
+    <div class="js-content">
+      Enter a number between 1 and 12:
+      <input id="input_switch_trycatch" type="number">
+      <button onclick="showNumericalMonth()">showNumericalMonth ()</button>
+      <div class="js-results">
+        Number given: <span id="show_numerical_month"></span>
+        <br>
+        Month: <span id="month_report"></span>
+      </div>
+    </div>
+    <pre>
+      function showNumericalMonth() {
+          var user_numerical_month = document.getElementById("input_switch_trycatch").value;
+          var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+          switch (user_numerical_month) {
+              case user_numerical_month:
+                  var case_month = month[user_numerical_month - 1];
+                  break;
+          }
+
+          document.getElementById("show_numerical_month").innerHTML = user_numerical_month;
+          document.getElementById("month_report").innerHTML = case_month;
+
+          try {
+              if (user_numerical_month === "") throw "no value entered!";
+              if (user_numerical_month &lt; 1) throw "value too low!";
+              if (user_numerical_month &gt; 12) throw "value too high!";
+          } catch (err) {
+              document.getElementById("month_report").innerHTML = "ERROR: " + err;
+          }
+      }
+    </pre>
+  </div>
+
+
+  <!-- SWITCH with fall-through -->
+  <div class="js-entry">
+    <a id="switch_fallthrough"><h2>SWITCH with fall-through</h2></a>
+    <div class="js-content">
+      Enter a number between 1 and 12:
+      <input id="input_switch_fallthrough" type="number">
+      <button onclick="showSeason()">showSeason ()</button>
+      <div class="js-results">
+        Number given: <span id="show_month_numerical"></span>
+        <br>
+        Season: <span id="show_season"></span>
+      </div>
+    </div>
+    <pre>
+      function showSeason() {
+          var user_numerical_month = document.getElementById("input_switch_fallthrough").value;
+          var season = ["Winter", "Spring", "Summer", "Fall"];
+          var case_season;
+
+          switch (Number(user_numerical_month)) {
+              case 1:
+              case 2:
+              case 12:
+                  case_season = season[0];
+                  break;
+              case 3:
+              case 4:
+              case 5:
+                  case_season = season[1];
+                  break;
+              case 6:
+              case 7:
+              case 8:
+                  case_season = season[2];
+                  break;
+              case 9:
+              case 10:
+              case 11:
+                  case_season = season[3];
+                  break;
+          }
+
+          document.getElementById("show_month_numerical").innerHTML = user_numerical_month;
+          document.getElementById("show_season").innerHTML = case_season;
+
+          try {
+              if (user_numerical_month === "") throw "no value entered!";
+              if (user_numerical_month &lt; 1) throw "value too low!";
+              if (user_numerical_month &gt; 12) throw "value too high!";
+          } catch (err) {
+              document.getElementById("show_season").innerHTML = "ERROR: " + err;
+          }
+      }
+    </pre>
+  </div>
+  
+  
+<script>
+//ARRAY TRAVERSAL- using WHILE loop
+function displaySelectMonths() {
+    var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var month_select = ["January", "March", "April", "May", "December"];
+    var i = 0;
+    var month_found = [];
+
+    while (month_select[i]) {
+        if (month.indexOf(month_select[i]) != -1) {
+            month_found.push(month_select[i]);
+        }
+
+        i++;
+    }
+
+    document.getElementById("display_select_months").innerHTML = month_found;
+}
+
+
+
+//BROWSER ATTRIBUTES
+/*the HTML and javascript for this uses multiple ids with the same name, needs to be corrected before being shown
+function getCheckedBoxes() {
+    document.getElementById("show_app_version").innerHTML = "";
+    document.getElementById("show_app_user_agent").innerHTML = "";
+    document.getElementById("show_app_platform").innerHTML = "";
+
+    var checkboxes = document.getElementsByName('browser_attribute');
+    var checkboxesChecked = [];
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            checkboxesChecked.push(checkboxes[i].value);
+        }
+    }
+
+    for (var ii = 0; ii < checkboxesChecked.length; ii++) {
+        if (checkboxesChecked[ii] == "appVersion") {
+            document.getElementById("show_app_version").innerHTML = navigator.appVersion;
+        } else if (checkboxesChecked[ii] == "userAgent") {
+            document.getElementById("show_app_user_agent").innerHTML = navigator.userAgent;
+        } else if (checkboxesChecked[ii] == "platform") {
+           document.getElementById("show_app_platform").innerHTML = navigator.platform;
+        }
+    }
+}
+*/
+
+
+//COOKIES
+function createCookies() {
+    //set cookie expiration date variable
+    var d = new Date();
+    var expiration_days = 30;
+    d.setTime(d.getTime() + (expiration_days * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+
+    //set all the other cookie variables
+    var cookie1 = "cookie1";
+    var cookie1_value = document.getElementById("input_cookie1").value;
+    var cookie2 = "cookie2";
+    var cookie2_value = document.getElementById("input_cookie2").value;
+    var cookie3 = "cookie3";
+    var cookie3_value = document.getElementById("input_cookie3").value;
+
+    setCookie(cookie1, cookie1_value, expires);
+    setCookie(cookie2, cookie2_value, expires);
+    setCookie(cookie3, cookie3_value, expires);
+
+    //notify user that the cookies were created
+    document.getElementById("show_cookie_creation_validation").innerHTML = "document.cookie has been modified";
+
+    cookieCheck();
+}
+
+function setCookie(cookie_name, cookie_value, expires) {
+    if (cookie_value !== "" && cookie_value !== null) {
+        document.cookie = cookie_name + "=" + cookie_value + "; " + expires;
+    } else {
+        //ensure that a key is not created without a value 
+        deleteCookie(cookie_name);
+    }
+}
+
+function deleteCookie(cookie_name) {
+    document.cookie = cookie_name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    document.getElementById("show_cookie_deleted").innerHTML = "A cookie has been deleted!";
+}
+
+function getCookie(cookie_name) {
+    var name = cookie_name + "=";
+    var cookie_pair = document.cookie.split(';');
+
+    for (var i = 0; i < cookie_pair.length; i++) {
+        var cookie_pair_string = cookie_pair[i];
+
+        while (cookie_pair_string.charAt(0) == ' ') {
+            cookie_pair_string = cookie_pair_string.substring(1);
+        }
+        
+        if (cookie_pair_string.indexOf(name) === 0) {
+            return cookie_pair_string.substring(name.length, cookie_pair_string.length);
+        }
+    }
+
+    return "";
+}
+
+function showCookies() {
+    alert(document.cookie);
+}
+
+function cookieCheck() {
+    var cookie1_value = getCookie("cookie1");
+    var cookie2_value = getCookie("cookie2");
+    var cookie3_value = getCookie("cookie3");
+
+    if (cookie1_value !== "")
+        {}
+    else {
+        alert("Please enter a value for cookie1, then press the *createCookies()* button and try again");
+    }
+
+    if (cookie2_value !== "")
+        {}
+    else {
+        alert("Please enter a value for cookie2, then press the *createCookies()* button and try again");
+    }
+
+    if (cookie3_value !== "")
+        {}
+    else {
+        alert("Please enter a value for cookie3, then press the *createCookies()* button and try again");
+    }
+
+    if (cookie1_value !== "" && cookie2_value !== "" && cookie3_value !== "") {
+        alert("All cookies have been successfully set!\n\n" +
+            "This is the content for the cookies on this page:\n\n" + document.cookie);
+    }
+}
+
+
+
+//CSS MODIFY
+function showReplacement() {
+    var color = "red";
+    
+    document.getElementById("btn_1").innerHTML = color;
+    document.getElementById("btn_1").style.color = color;
+}
+
+
+
+//CSS MODIFY of TYPE
+function changeFontSize() {
+    //this affects all h4 elements in the DOM
+    var h4_array = document.getElementsByTagName("h4");
+
+    //notice the need to specify the "px" modifier
+    var font_size = document.getElementById("input_font_size").value + "px";
+
+    for (var i = 0; i < h4_array.length; i++) {
+        h4_array[i].style.fontSize = font_size;
+    }
+}
+
+
+
+//DATE / TIME / TIMER, formatted and live
+function runClock() {
+    setInterval(timeLocal, 1000);
+}
+
+function timeLocal() {
+    var time_local = new Date();
+    
+    document.getElementById("show_date_time_local").innerHTML = time_local.toLocaleTimeString();
+}
+
+function timeLocal2() {
+    var time_local = new Date();
+    
+    document.getElementById("show_date_time_iterate").innerHTML = time_local.toLocaleTimeString();
+} 
+
+function startClock() {
+    document.getElementById("stopwatch").innerHTML = "Stop clock";       
+    document.getElementById("stopwatch").setAttribute('onclick','stopClock()');          
+    clockInterval = setInterval(timeLocal2, 1000);   
+}
+
+function stopClock() {    
+    clearInterval(clockInterval);
+    document.getElementById("stopwatch").innerHTML = "Start clock";       
+    document.getElementById("stopwatch").setAttribute('onclick','startClock()');    
+}
+
+
+
+//DOCUMENT URL- display, redirect, back, forward
+function displayLocation() {
+    document.getElementById("show_page_url").innerHTML = window.location.href;
+}
+
+function changeLocation() {
+    window.location.assign("http://markedwardnewman.com/");
+}
+
+function previousURL() {
+    window.history.back();
+}
+
+function nextURL() {
+    window.history.forward();
+}
+
+
+
+//DOCUMENT VIEWPORT- show inner dimensions
+function displayViewportInfo() {
+    document.getElementById("show_viewport_width").innerHTML = window.innerWidth + " px";
+    document.getElementById("show_viewport_height").innerHTML = window.innerHeight + " px";
+}
+
+
+
+//FIND and REPLACE
+function replaceString() {
+    var search_content = document.getElementById("search_scope").innerHTML;
+    var find_string = document.getElementById("input_find").value;
+    var replace_string = document.getElementById("input_replace").value;
+    var search_content_modified = search_content.replace(find_string, replace_string);
+
+    document.getElementById("search_scope").innerHTML = search_content_modified;
+}
+
+
+
+//FORM, PROMPT
+function queryPrompt() {
+    var user_input = prompt("Type something...", "something");
+
+    if (user_input !== "") {
+        document.getElementById("show_prompt_result").innerHTML = user_input;
+    }
+    else {
+        document.getElementById("show_prompt_result").innerHTML = "No information provided!";
+    }
+}
+
+
+
+//FUNCTION CLOSURES
+var closureCount = (function() {
+    var counter = 0;
+    return function() {
+        return counter += 1;
+    };
+})();
+
+
+function closureCountExample() {
+    document.getElementById("function_closure").innerHTML = closureCount();
+}
+
+
+function closureAppendList() {
+    invokeList = populateList();
+    invokeList();
+}
+
+
+function populateList() {
+    var list_item = document.createElement("LI");
+    var user_text_4_3_1 = document.createTextNode(document.getElementById("input_text_4_3_1").value);
+    var appendList = function() {
+        list_item.appendChild(user_text_4_3_1);
+        document.getElementById("show_closure").appendChild(list_item);
+    };
+
+    return appendList;
+}
+
+
+function clearField() {
+    document.getElementById("input_text_4_3_1").value = "";
+}
+
+
+
+//FUNCTION PARAMETERS / ARGUMENTS
+function showAverage() {
+    var value1 = Number(document.getElementById("input_function_parameter1").value);
+    var value2 = Number(document.getElementById("input_function_parameter2").value);
+
+    document.getElementById("inputed_average").innerHTML = findAverage(value1, value2);
+}
+
+
+function findAverage(value1, value2) {
+    var average1 = (value1 + value2) / 2;
+
+    return average1;
+}
+
+
+
+//JSON manipulation
+function displaySkiResorts() {
+    var i = 0;
+    var json_object = '{"skiResorts":[' +
+        '{"resortName":"Alta","resortState":"Utah" },' +
+        '{"resortName":"Aspen","resortState":"Colorado" },' +
+        '{"resortName":"Bear Valley","resortState":"California" }]}';
+
+    json_object_parsed = JSON.parse(json_object);
+
+    for (; i < 3; i++) {
+        var append_show_json_example = document.getElementById("show_json_example");
+        var skiResort = json_object_parsed.skiResorts[i].resortName + ": " + json_object_parsed.skiResorts[i].resortState + "  |  ";
+        append_show_json_example.appendChild(document.createTextNode(skiResort));
+    }
+}
+
+
+
+//MOUSE EVENTS
+function swapImage(this_keyword, image_path, image_name) {
+    //When invoking this function, the keyword 'this' must be used as the first parameter
+    //    Usage example: swapImage(this, 'assets/images/', 'my_avatar_right.jpg')
+    
+    this_keyword.src = image_path + image_name;
+}
+
+
+function showOnMouseDown() {
+    document.getElementById("show_onmouse").style.color = "red";
+    document.getElementById("show_onmouse").innerHTML = "SUPER EXCITING!";
+}
+
+
+function showOnMouseUp() {
+    document.getElementById("show_onmouse").style.color = "black";
+    document.getElementById("show_onmouse").innerHTML = "Nothing exciting yet...";
+}
+
+
+
+//NUMERIC FORMATTING
+function formatNumber() {
+    var user_input = document.getElementById("format_number").value;
+
+    document.getElementById("format_number_modified").innerHTML = "$" + Number(user_input).toFixed(2);
+}
+
+
+
+//OBJECT PROTOTYPE- basic
+var object_type = "A balloon chair!"; //GLOBAL VARIABLE
+var object_maxPassengers = 1; //GLOBAL VARIABLE
+var objectName = new objectPrototype(object_type, object_maxPassengers); //GLOBAL VARIABLE
+
+
+function objectPrototype(property1, property2) {
+    this.property1 = property1;
+    this.property2 = property2;
+    this.method1 = function() {
+        document.getElementById("confirm_method1").innerHTML = "We have lift off!";
+    };
+    this.method2 = function() {
+        document.getElementById("confirm_method2").innerHTML = "Two feet high and rising!";
+    };
+}
+
+
+function populateObject() {
+    document.getElementById("object_property1").innerHTML = objectName.property1;
+    document.getElementById("object_property2").innerHTML = objectName.property2;
+}
+
+
+
+//OBJECT PROTOTYPE / CONSTRUCTOR- initialize, add, and update
+//the object prototype
+function player(firstName, lastName, height, yearsInLeague) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.height = height;
+    this.yearsInLeague = yearsInLeague;
+    this.updateYearsInLeague = function(yearsInLeague) {
+        document.getElementById("player_league_years").innerHTML = yearsInLeague;
+    }
+}
+
+
+//initialize object
+function initializePlayer() {
+    new_player = new player("Mark", "Newman", "5'11", 1); // GLOBAL VARIABLE
+
+    document.getElementById("player_first_name").innerHTML = new_player.firstName;
+    document.getElementById("player_last_name").innerHTML = new_player.lastName;
+    document.getElementById("player_height").innerHTML = new_player.height;
+    document.getElementById("player_league_years").innerHTML = new_player.yearsInLeague;
+}
+
+
+//add property to object
+function addTeam() {
+    player.prototype.team = "The Nuanced Coders";
+
+    document.getElementById("player_team").innerHTML = new_player.team;
+}
+
+
+//update existing property
+function updateTeam(new_team_name) {
+    player.prototype.updateTeam = function() {
+        new_player.team = new_team_name;
+        document.getElementById("player_team").innerHTML = new_player.team;
+    }
+
+    new_player.updateTeam();
+}
+
+
+
+//OBJECT TRAVERSAL- using FOR/IN loop
+function displayBirthMonth() {
+    var birthMonth = {
+        January: "Julia",
+        February: "Febrarian",
+        March: "Mary",
+        April: "Abrilia",
+        May: "Ma",
+        June: "Junia",
+        July: "Juli",
+        August: "Auggy",
+        September: "Seth",
+        October: "Oggy",
+        November: "Novellia",
+        December: "Deccy"
+    }
+
+    var month_nickname = "";
+    var i = 0;
+
+    for (i in birthMonth) {
+        month_nickname += i + ":" + birthMonth[i] + "<br>";
+    }
+
+    document.getElementById("object_traversal_display").innerHTML = month_nickname;
+}
+
+
+
+//OBJECT MANIPULATION using DATE
+function showUserDate() {
+    var date = new Date(document.getElementById("input_user_defined_date").value);
+    var day_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    document.getElementById("show_day_of_month").innerHTML = date.getDate();
+    document.getElementById("show_month").innerHTML = month[date.getMonth()];
+    document.getElementById("show_year").innerHTML = date.getFullYear();
+    document.getElementById("show_day_of_week").innerHTML = day_of_week[date.getDay()];
+}
+
+
+
+//RANDOM NUMBER MANIPULATION- with contraints
+function randomRun() {
+    var rand_seed = Math.random();
+    var rand_seed_modified = (rand_seed * 100).toFixed(0);
+
+    if ((rand_seed_modified >= 25) && (rand_seed_modified <= 75)) {
+        document.getElementById("random_number").innerHTML = rand_seed_modified;
+    } else {
+        randomRun();
+    }
+
+    //shows if the random seed is outside of scope
+    document.getElementById("random_seed").innerHTML = rand_seed;
+}
+
+
+
+//REGULAR EXPRESSION with find and replace and
+function regexReplace() {
+    var user_text = document.getElementById("input_regex_replace").value;
+    var regex_find = /cry/i;
+    var regex_replace = "laugh";
+    var user_text_modified = user_text.replace(regex_find, regex_replace);
+
+    document.getElementById("regex_replace_original").innerHTML = user_text;
+    document.getElementById("regex_replace_modified").innerHTML = user_text_modified;
+}
+
+
+
+//STRING COMPARISON
+function compareStrings() {
+    var user_input1 = document.getElementById("input_comparison1").value;
+    var user_input2 = document.getElementById("input_comparison2").value;
+    var user_input_compare = user_input1.localeCompare(user_input2);
+
+    if (user_input_compare === 0) {
+        document.getElementById("comparison_answer").innerHTML = "equal";
+    } else {
+        document.getElementById("comparison_answer").innerHTML = "not equal";
+    }
+}
+
+
+
+//SWITCH using TRY/CATCH error handling
+function showNumericalMonth() {
+    var user_numerical_month = document.getElementById("input_switch_trycatch").value;
+    var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    switch (user_numerical_month) {
+        case user_numerical_month:
+            var case_month = month[user_numerical_month - 1];
+            break;
+    }
+
+    document.getElementById("show_numerical_month").innerHTML = user_numerical_month;
+    document.getElementById("month_report").innerHTML = case_month;
+
+    try {
+        if (user_numerical_month === "") throw "no value entered!";
+        if (user_numerical_month < 1) throw "value too low!";
+        if (user_numerical_month > 12) throw "value too high!";
+    } catch (err) {
+        document.getElementById("month_report").innerHTML = "ERROR: " + err;
+    }
+}
+
+
+
+//SWITCH with fall-through
+function showSeason() {
+    var user_numerical_month = document.getElementById("input_switch_fallthrough").value;
+    var season = ["Winter", "Spring", "Summer", "Fall"];
+    var case_season;
+
+    switch (Number(user_numerical_month)) {
+        case 1:
+        case 2:
+        case 12:
+            case_season = season[0];
+            break;
+        case 3:
+        case 4:
+        case 5:
+            case_season = season[1];
+            break;
+        case 6:
+        case 7:
+        case 8:
+            case_season = season[2];
+            break;
+        case 9:
+        case 10:
+        case 11:
+            case_season = season[3];
+            break;
+    }
+
+    document.getElementById("show_month_numerical").innerHTML = user_numerical_month;
+    document.getElementById("show_season").innerHTML = case_season;
+
+    try {
+        if (user_numerical_month === "") throw "no value entered!";
+        if (user_numerical_month < 1) throw "value too low!";
+        if (user_numerical_month > 12) throw "value too high!";
+    } catch (err) {
+        document.getElementById("show_season").innerHTML = "ERROR: " + err;
+    }
+}
+</script>
+
+</body>
+</html>
